@@ -1,0 +1,26 @@
+  # STARS Engine API — structural integration predictions + chart computation
+  stars-api:
+    image: stars-api:latest
+    container_name: stars-api
+    restart: unless-stopped
+    user: "101:101"
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:mode=0777
+    volumes:
+      - /opt/stars-api:/app:ro
+      - stars_api_data:/app/data
+    environment:
+      - STARS_SECRET=${STARS_SECRET:-dev-secret}
+    networks:
+      - gateway
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M

@@ -1,0 +1,362 @@
+---
+import Layout from "@/components/base/Layout.astro";
+
+const API_URL = "https://cosmiccalibrations.madmanwithabox.org/api/stars/si-predict";
+---
+
+<Layout seo={{ title: "Stars Client SI Predictions", noindex: true }}>
+  <!-- Password gate -->
+  <section id="auth-gate" class="min-h-screen flex items-center justify-center bg-brand-teal px-6 pt-16">
+    <div class="max-w-sm w-full text-center">
+      <div class="mb-8">
+        <svg class="w-16 h-16 text-brand-grey/60 mx-auto mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 6v6l4 2"/>
+        </svg>
+        <h1 class="text-2xl font-heading font-bold text-white mb-2">Practitioner Access</h1>
+        <p class="text-sm text-white/50">Stars Engine — SI Prediction Tool</p>
+      </div>
+      <input
+        type="password"
+        id="auth-password"
+        placeholder="Enter access key"
+        class="w-full rounded-xl bg-white/10 border border-white/20 px-5 py-3.5 text-white placeholder-white/30 text-center text-lg tracking-widest focus:outline-none focus:border-brand-grey transition-colors"
+        autocomplete="off"
+      />
+      <p id="auth-error" class="text-red-300 text-xs mt-3 hidden">Incorrect key</p>
+    </div>
+  </section>
+
+  <!-- Main app (hidden until authenticated) -->
+  <div id="app" class="hidden">
+    <!-- Header -->
+    <section class="pt-24 pb-8 px-6 bg-brand-teal">
+      <div class="max-w-5xl mx-auto flex items-center justify-between">
+        <div>
+          <p class="section-label text-brand-grey/70 mb-2">Practitioner Tool</p>
+          <h1 class="text-3xl font-heading font-bold text-white">Stars SI Predictions</h1>
+        </div>
+        <button id="logout-btn" class="text-sm text-white/50 hover:text-white transition-colors">Logout</button>
+      </div>
+    </section>
+
+    <!-- Form -->
+    <section class="py-10 px-6 bg-brand-paper">
+      <div class="max-w-5xl mx-auto">
+        <form id="client-form" class="bg-white rounded-[24px] border border-brand-teal/10 p-8 shadow-sm">
+          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-[0.12em] text-brand-grey mb-2">Client Name</label>
+              <input type="text" id="field-name" placeholder="Jane Smith"
+                class="w-full rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal transition-colors" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-[0.12em] text-brand-grey mb-2">Birth Date *</label>
+              <input type="date" id="field-date" required
+                class="w-full rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal transition-colors" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-[0.12em] text-brand-grey mb-2">Birth Time</label>
+              <input type="time" id="field-time" placeholder="14:30"
+                class="w-full rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal transition-colors" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-[0.12em] text-brand-grey mb-2">Birth Location</label>
+              <input type="text" id="field-location" placeholder="Austin, TX"
+                class="w-full rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal transition-colors" />
+            </div>
+          </div>
+          <div class="mt-6 flex items-center gap-4">
+            <button type="submit" id="submit-btn" class="rounded-full bg-brand-teal text-white font-semibold px-8 py-3.5 text-sm hover:bg-brand-teal-light shadow-sm transition-all disabled:opacity-50">
+              <span id="submit-text">Compute SI Predictions</span>
+              <span id="submit-spinner" class="hidden">Computing...</span>
+            </button>
+            <button type="button" id="print-btn" class="hidden text-sm text-brand-grey hover:text-brand-teal transition-colors font-medium">
+              Print Results
+            </button>
+          </div>
+          <p id="form-error" class="text-red-500 text-xs mt-3 hidden"></p>
+          <p class="text-xs text-brand-charcoal/30 mt-3">Time and location are optional — defaults to noon and Austin, TX if omitted.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section id="results" class="hidden py-10 px-6 bg-white">
+      <div class="max-w-5xl mx-auto">
+        <!-- Chart Summary -->
+        <div id="chart-summary" class="mb-10 bg-brand-paper rounded-[20px] border border-brand-teal/10 p-6"></div>
+
+        <!-- Session tabs -->
+        <div id="session-tabs" class="flex overflow-x-auto gap-1 mb-6 border-b border-brand-teal/10 pb-2"></div>
+
+        <!-- Session detail -->
+        <div id="session-detail" class="bg-white rounded-[20px] border border-brand-teal/10 p-8 shadow-sm"></div>
+
+        <!-- Confirm/deny summary -->
+        <div id="confirm-summary" class="mt-10 bg-brand-paper rounded-[20px] border border-brand-teal/10 p-6 text-center hidden">
+          <p class="text-sm font-semibold text-brand-teal mb-1">Session Tracking</p>
+          <p id="confirm-count" class="text-xs text-brand-charcoal/50"></p>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<script>
+  // Simple client-side password gate
+  const ACCESS_KEY = "cosmic-stars-2026"; // Change this to a shared secret
+
+  const authGate = document.getElementById("auth-gate")!;
+  const app = document.getElementById("app")!;
+  const authInput = document.getElementById("auth-password") as HTMLInputElement;
+  const authError = document.getElementById("auth-error")!;
+
+  // Check localStorage for existing auth
+  if (localStorage.getItem("stars-auth") === ACCESS_KEY) {
+    authGate.classList.add("hidden");
+    app.classList.remove("hidden");
+  }
+
+  authInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      if (authInput.value === ACCESS_KEY) {
+        localStorage.setItem("stars-auth", ACCESS_KEY);
+        authGate.classList.add("hidden");
+        app.classList.remove("hidden");
+        authError.classList.add("hidden");
+      } else {
+        authError.classList.remove("hidden");
+        authInput.value = "";
+      }
+    }
+  });
+
+  document.getElementById("logout-btn")?.addEventListener("click", () => {
+    localStorage.removeItem("stars-auth");
+    location.reload();
+  });
+
+  // Form submission
+  const API = "https://cosmiccalibrations.madmanwithabox.org/api/stars/si-predict";
+  const form = document.getElementById("client-form") as HTMLFormElement;
+  const results = document.getElementById("results")!;
+  const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement;
+  const submitText = document.getElementById("submit-text")!;
+  const submitSpinner = document.getElementById("submit-spinner")!;
+  const formError = document.getElementById("form-error")!;
+  const printBtn = document.getElementById("print-btn")!;
+
+  let currentData: any = null;
+  let confirmations: Record<string, Record<number, boolean>> = {};
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = (document.getElementById("field-name") as HTMLInputElement).value || "Client";
+    const date = (document.getElementById("field-date") as HTMLInputElement).value;
+    const time = (document.getElementById("field-time") as HTMLInputElement).value;
+    const location = (document.getElementById("field-location") as HTMLInputElement).value;
+
+    if (!date) { formError.textContent = "Birth date is required"; formError.classList.remove("hidden"); return; }
+    formError.classList.add("hidden");
+    submitBtn.disabled = true;
+    submitText.classList.add("hidden");
+    submitSpinner.classList.remove("hidden");
+    results.classList.add("hidden");
+
+    try {
+      const resp = await fetch(API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, birth_date: date, birth_time: time || undefined, birth_location: location || "Austin, TX" }),
+      });
+      const data = await resp.json();
+      if (data.error) { formError.textContent = data.error; formError.classList.remove("hidden"); return; }
+      currentData = data;
+      loadConfirmations(name);
+      renderResults(data, name);
+      results.classList.remove("hidden");
+      printBtn.classList.remove("hidden");
+      results.scrollIntoView({ behavior: "smooth" });
+    } catch (err: any) {
+      formError.textContent = "Network error — try again";
+      formError.classList.remove("hidden");
+    } finally {
+      submitBtn.disabled = false;
+      submitText.classList.remove("hidden");
+      submitSpinner.classList.add("hidden");
+    }
+  });
+
+  function loadConfirmations(clientName: string) {
+    const stored = localStorage.getItem(`si-confirm-${clientName}`);
+    confirmations = stored ? JSON.parse(stored) : {};
+  }
+
+  function saveConfirmations(clientName: string) {
+    localStorage.setItem(`si-confirm-${clientName}`, JSON.stringify(confirmations));
+    updateConfirmSummary();
+  }
+
+  function updateConfirmSummary() {
+    const summary = document.getElementById("confirm-summary")!;
+    const count = document.getElementById("confirm-count")!;
+    let total = 0, confirmed = 0, denied = 0;
+    for (const client of Object.values(confirmations)) {
+      for (const [sess, val] of Object.entries(client as Record<number, boolean>)) {
+        total++;
+        if (val) confirmed++; else denied++;
+      }
+    }
+    if (total > 0) {
+      summary.classList.remove("hidden");
+      count.textContent = `${confirmed} confirmed, ${denied} denied out of ${total} predictions`;
+    } else {
+      summary.classList.add("hidden");
+    }
+  }
+
+  function renderResults(data: any, clientName: string) {
+    const si = data.structural_integration;
+    const cs = data.chart_summary;
+
+    // Chart summary
+    document.getElementById("chart-summary")!.innerHTML = `
+      <div class="grid sm:grid-cols-4 gap-4 text-center">
+        <div><p class="text-xs text-brand-grey uppercase tracking-widest mb-1">Sun</p><p class="text-lg font-heading font-bold text-brand-teal">${cs.sun_sign}</p></div>
+        <div><p class="text-xs text-brand-grey uppercase tracking-widest mb-1">Moon</p><p class="text-lg font-heading font-bold text-brand-teal">${cs.moon_sign}</p></div>
+        <div><p class="text-xs text-brand-grey uppercase tracking-widest mb-1">Ascendant</p><p class="text-lg font-heading font-bold text-brand-teal">${cs.ascendant}</p></div>
+        <div><p class="text-xs text-brand-grey uppercase tracking-widest mb-1">HD Type</p><p class="text-lg font-heading font-bold text-brand-teal">${cs.hd_type} ${cs.hd_profile}</p></div>
+      </div>
+      ${data.warning ? `<p class="text-xs text-amber-600 mt-3 text-center">${data.warning}</p>` : ""}
+      <div class="mt-4 pt-4 border-t border-brand-teal/10">
+        <p class="text-sm text-brand-charcoal/70 leading-relaxed">${si.client_summary}</p>
+      </div>
+      ${si.contraindications?.length ? `
+        <div class="mt-4 p-4 rounded-[14px] bg-red-50 border border-red-200">
+          <p class="text-xs font-bold text-red-700 mb-2">Contraindications</p>
+          ${si.contraindications.map((c: string) => `<p class="text-xs text-red-600 mb-1">${c}</p>`).join("")}
+        </div>` : ""}
+    `;
+
+    // Session tabs
+    const tabs = document.getElementById("session-tabs")!;
+    tabs.innerHTML = si.session_plan.map((s: any, i: number) => `
+      <button class="sess-tab whitespace-nowrap px-4 py-2.5 rounded-full text-xs font-semibold transition-all ${i === 0 ? 'bg-brand-teal text-white' : 'bg-brand-paper text-brand-grey hover:text-brand-teal'}" data-sid="${s.session}">
+        ${s.session}. ${s.rolfing_focus.split(".")[0]}
+      </button>
+    `).join("");
+
+    // Session click handler
+    tabs.querySelectorAll(".sess-tab").forEach(btn => {
+      btn.addEventListener("click", () => {
+        tabs.querySelectorAll(".sess-tab").forEach(b => { b.classList.remove("bg-brand-teal","text-white"); b.classList.add("bg-brand-paper","text-brand-grey"); });
+        btn.classList.add("bg-brand-teal","text-white");
+        btn.classList.remove("bg-brand-paper","text-brand-grey");
+        renderSession(parseInt((btn as HTMLElement).dataset.sid!), clientName);
+      });
+    });
+
+    // Render first session
+    renderSession(1, clientName);
+
+    // Print
+    document.getElementById("print-btn")!.onclick = () => window.print();
+  }
+
+  function renderSession(sid: number, clientName: string) {
+    const si = currentData.structural_integration;
+    const s = si.session_plan.find((x: any) => x.session === sid);
+    if (!s) return;
+
+    const clientConf = confirmations[clientName] || {};
+    const confKey = `session-${sid}`;
+    const status = clientConf[confKey];
+
+    const detail = document.getElementById("session-detail")!;
+    detail.innerHTML = `
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <span class="text-xs font-bold text-brand-grey uppercase tracking-[0.15em]">Session ${s.session}</span>
+          <h3 class="text-2xl font-heading font-bold text-brand-teal mt-1">${s.rolfing_focus}</h3>
+        </div>
+        <div class="flex gap-2">
+          <button class="confirm-btn rounded-full px-4 py-2 text-xs font-bold transition-all ${status === true ? 'bg-green-100 text-green-700 border border-green-300' : 'bg-brand-paper text-brand-grey border border-brand-teal/10 hover:border-green-300'}" data-action="confirm" data-key="${confKey}">
+            ${status === true ? '✓ Confirmed' : 'Confirm'}
+          </button>
+          <button class="deny-btn rounded-full px-4 py-2 text-xs font-bold transition-all ${status === false ? 'bg-red-100 text-red-700 border border-red-300' : 'bg-brand-paper text-brand-grey border border-brand-teal/10 hover:border-red-300'}" data-action="deny" data-key="${confKey}">
+            ${status === false ? '✗ Denied' : 'Deny'}
+          </button>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="space-y-4">
+          <div>
+            <p class="text-xs font-bold text-brand-grey uppercase tracking-[0.1em] mb-2">Pacing</p>
+            <p class="text-sm text-brand-charcoal/70">${s.pacing}</p>
+          </div>
+          ${s.armor_priority?.length ? `
+            <div>
+              <p class="text-xs font-bold text-brand-grey uppercase tracking-[0.1em] mb-2">Armor Priorities</p>
+              ${s.armor_priority.map((a: any) => `
+                <div class="mb-2 p-3 rounded-[12px] ${a.status.includes('ARMORED') ? 'bg-amber-50 border border-amber-200' : 'bg-brand-paper'}">
+                  <p class="text-xs font-semibold text-brand-teal">${a.segment} — ${a.status}</p>
+                  <p class="text-xs text-brand-charcoal/60 mt-0.5">${a.guidance}</p>
+                </div>
+              `).join("")}
+            </div>` : ""}
+          ${s.gene_keys_somatic_shadows?.length ? `
+            <div>
+              <p class="text-xs font-bold text-brand-grey uppercase tracking-[0.1em] mb-2">Gene Key Shadows</p>
+              ${s.gene_keys_somatic_shadows.map((g: any) => `
+                <p class="text-xs text-brand-charcoal/70">Gate ${g.gate}: ${g.shadow} → ${g.gift} (${g.body_region})</p>
+              `).join("")}
+            </div>` : ""}
+        </div>
+        <div class="space-y-4">
+          ${s.emotional_release_potential ? `
+            <div>
+              <p class="text-xs font-bold text-brand-grey uppercase tracking-[0.1em] mb-2">Emotional Release Potential</p>
+              <p class="text-sm text-brand-charcoal/70 leading-relaxed">${s.emotional_release_potential}</p>
+            </div>` : ""}
+          ${s.chakra_context ? `
+            <div>
+              <p class="text-xs font-bold text-brand-grey uppercase tracking-[0.1em] mb-2">Chakra Context</p>
+              ${Object.entries(s.chakra_context).map(([ch, ctx]: [string, any]) => `
+                <span class="inline-block text-xs mr-2 mb-1 px-2 py-1 rounded-full ${ctx.state === 'balanced' ? 'bg-green-50 text-green-700' : 'bg-amber-50 text-amber-700'}">${ch}: ${ctx.state} (${ctx.activation})</span>
+              `).join("")}
+            </div>` : ""}
+          ${s.structural_friction?.length ? `
+            <div>
+              <p class="text-xs font-bold text-brand-grey uppercase tracking-[0.1em] mb-2">Structural Friction</p>
+              ${s.structural_friction.map((f: any) => `<p class="text-xs text-brand-charcoal/70">${f}</p>`).join("")}
+            </div>` : ""}
+        </div>
+      </div>
+
+      ${si.polyvagal_guidance ? `
+        <div class="mt-6 pt-6 border-t border-brand-teal/10">
+          <p class="text-xs font-bold text-brand-grey uppercase tracking-[0.1em] mb-2">Polyvagal Guidance</p>
+          <p class="text-sm text-brand-charcoal/70">Pacing: ${si.polyvagal_guidance.pacing}</p>
+          ${si.polyvagal_guidance.shutdown_signs ? `<p class="text-xs text-brand-charcoal/50 mt-1">Shutdown signs: ${si.polyvagal_guidance.shutdown_signs.join(", ")}</p>` : ""}
+        </div>` : ""}
+    `;
+
+    // Bind confirm/deny buttons
+    detail.querySelectorAll(".confirm-btn, .deny-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const key = (btn as HTMLElement).dataset.key!;
+        const action = (btn as HTMLElement).dataset.action!;
+        if (!confirmations[clientName]) confirmations[clientName] = {};
+        if (action === "confirm") {
+          confirmations[clientName][key] = confirmations[clientName]?.[key] === true ? undefined : true;
+        } else {
+          confirmations[clientName][key] = confirmations[clientName]?.[key] === false ? undefined : false;
+        }
+        saveConfirmations(clientName);
+        renderSession(sid, clientName);
+      });
+    });
+  }
+</script>

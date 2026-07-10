@@ -19,15 +19,22 @@ export const PRICING = {
   savings: 150,
 } as const;
 
-export const CALENDLY = {
-  /** Rhonda's Calendly username. Create a free account at calendly.com
-   *  and set up a "Structural Integration Consult" event type.
-   *  Calendly syncs 2-way with Google Calendar automatically. */
-  username: "rhonda-roberts-bcsi",
-  /** The event type slug for booking a consultation */
-  eventType: "free-consult",
-  /** Color override for the Calendly widget (matches brand teal) */
-  primaryColor: "005F73",
+export const BOOKING = {
+  /**
+   * Google Calendar Appointment Schedule URL.
+   *
+   * Rhonda creates this once in Google Calendar (no new account needed):
+   *   1. Open calendar.google.com with rhonda.c.roberts@gmail.com
+   *   2. Click "Create" → "Appointment schedule"
+   *   3. Set title ("Free 15-Min Consult"), duration (15 min), availability
+   *   4. Copy the public booking link and paste it here
+   *
+   * The URL looks like:
+   *   https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ...
+   */
+  url: "https://calendar.google.com/calendar/u/0/appointments/schedules/YOUR_SCHEDULE_ID",
+  /** Label shown on booking buttons */
+  label: "Book a Free Consult",
 } as const;
 
 export const NAV = {

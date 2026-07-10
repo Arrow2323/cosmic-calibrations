@@ -1,16 +1,10 @@
 ---
-import { BUSINESS } from "@/utils/constants";
-import CalendlyInline from "@/components/ui/CalendlyInline.astro";
+import { BUSINESS, BOOKING } from "@/utils/constants";
+import BookButton from "@/components/ui/BookButton.astro";
 import ContactForm from "@/components/ui/ContactForm.astro";
 ---
 
-<!--
-  Contact section — dark teal background.
-  Tabbed layout: "Book a Session" (Calendly inline embed) | "Send a Message" (contact form).
-  Contact info + hours in a sidebar/strip.
--->
 <section id="contact" class="py-24 md:py-32 px-6 bg-brand-teal relative overflow-hidden">
-  <!-- Subtle dot pattern -->
   <div
     class="absolute inset-0 opacity-[0.05]"
     style="background-image: radial-gradient(circle, #94A3B8 1px, transparent 1px); background-size: 40px 40px;"
@@ -18,7 +12,6 @@ import ContactForm from "@/components/ui/ContactForm.astro";
   ></div>
 
   <div class="relative z-10 max-w-6xl mx-auto">
-    <!-- Section Header -->
     <div class="text-center mb-16">
       <p class="section-label mb-4 text-brand-grey/80">Get in Touch</p>
       <h2 class="text-3xl md:text-4xl font-heading font-bold text-white mb-4">
@@ -64,21 +57,15 @@ import ContactForm from "@/components/ui/ContactForm.astro";
           </div>
         </div>
 
-        <!-- Calendar sync note -->
         <div class="pt-6 border-t border-white/10">
-          <div class="flex items-start gap-3 text-xs text-white/40">
-            <svg class="w-4 h-4 text-brand-grey shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            </svg>
-            <p class="leading-relaxed">
-              Booking is secure and your information is private.
-              Rhonda's calendar is updated automatically when you schedule.
-            </p>
-          </div>
+          <p class="text-xs text-white/40">
+            Your privacy matters. Information submitted through this form is used
+            only to respond to your inquiry. We never share or sell your data.
+          </p>
         </div>
       </div>
 
-      <!-- Right: Tabbed widget — Book / Message -->
+      <!-- Right: Booking + Contact Form tabs -->
       <div>
         <div class="bg-white rounded-[24px] shadow-xl overflow-hidden">
           <!-- Tabs -->
@@ -116,15 +103,20 @@ import ContactForm from "@/components/ui/ContactForm.astro";
             </button>
           </div>
 
-          <!-- Tab panels -->
-          <div id="panel-book" class="tab-panel">
-            <CalendlyInline
-              title=""
-              subtitle=""
-              class="[&_.calendly-inline-widget]:!rounded-none [&_.calendly-inline-widget]:!border-0 [&_.calendly-inline-widget]:h-[620px]"
-            />
+          <!-- Tab: Book -->
+          <div id="panel-book" class="tab-panel p-8 md:p-10">
+            <h3 class="font-heading font-bold text-xl text-brand-teal mb-2">Schedule a free consult</h3>
+            <p class="text-sm text-brand-charcoal/60 mb-6 leading-relaxed">
+              Choose a time that works for you. Your session is confirmed instantly and
+              Rhonda's calendar is updated automatically — no accounts, no registration.
+            </p>
+            <BookButton label={BOOKING.label} variant="primary" class="w-full justify-center !px-8 !py-4" />
+            <p class="text-xs text-brand-charcoal/40 mt-4 text-center">
+              Opens Google Calendar in a new tab
+            </p>
           </div>
 
+          <!-- Tab: Message -->
           <div id="panel-message" class="tab-panel hidden">
             <div class="p-8">
               <h3 class="font-heading font-bold text-xl text-brand-teal mb-2">Send a message</h3>
@@ -142,7 +134,6 @@ import ContactForm from "@/components/ui/ContactForm.astro";
 
 <script>
   function switchTab(tabId: string) {
-    // Update buttons
     document.querySelectorAll(".tab-btn").forEach((btn) => {
       const isActive = (btn as HTMLElement).dataset.tab === tabId;
       btn.setAttribute("aria-selected", String(isActive));
@@ -154,8 +145,6 @@ import ContactForm from "@/components/ui/ContactForm.astro";
         btn.classList.remove("text-brand-teal", "border-b-2", "border-brand-teal", "bg-brand-teal/5");
       }
     });
-
-    // Update panels
     document.querySelectorAll(".tab-panel").forEach((panel) => {
       if (panel.id === `panel-${tabId}`) {
         panel.classList.remove("hidden");
@@ -164,7 +153,6 @@ import ContactForm from "@/components/ui/ContactForm.astro";
       }
     });
   }
-
   document.querySelectorAll(".tab-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       const tabId = (btn as HTMLElement).dataset.tab;

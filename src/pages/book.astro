@@ -1,41 +1,29 @@
 ---
 import Layout from "@/components/base/Layout.astro";
-import CalendlyInline from "@/components/ui/CalendlyInline.astro";
-import { BUSINESS } from "@/utils/constants";
+import BookButton from "@/components/ui/BookButton.astro";
+import { BUSINESS, BOOKING } from "@/utils/constants";
 ---
 
 <Layout seo={{ title: "Book a Session" }}>
-  <!-- Header -->
-  <section class="pt-28 pb-12 px-6 bg-white">
+  <section class="pt-28 pb-16 px-6 bg-white">
     <div class="max-w-3xl mx-auto text-center">
       <p class="section-label mb-4">Schedule</p>
       <h1 class="text-4xl md:text-5xl font-heading font-bold text-brand-teal mb-4">
         Book a Session
       </h1>
-      <p class="text-lg text-brand-charcoal/60 max-w-xl mx-auto leading-relaxed">
+      <p class="text-lg text-brand-charcoal/60 max-w-xl mx-auto leading-relaxed mb-8">
         Choose a time below. Your session is confirmed instantly and {BUSINESS.practitioner}'s calendar updates automatically.
       </p>
+      <BookButton label={BOOKING.label} variant="primary" class="!px-10 !py-5 !text-lg" />
+      <p class="text-xs text-brand-charcoal/40 mt-4">Opens Google Calendar in a new tab — no account needed</p>
     </div>
   </section>
 
-  <!-- Calendly Inline -->
-  <section class="py-8 px-6 bg-brand-paper">
-    <div class="max-w-3xl mx-auto">
-      <div class="bg-white rounded-[24px] border border-brand-teal/10 shadow-sm overflow-hidden">
-        <CalendlyInline
-          title=""
-          subtitle=""
-          class="[&_.calendly-inline-widget]:!rounded-none [&_.calendly-inline-widget]:!border-0 [&_.calendly-inline-widget]:h-[700px]"
-        />
-      </div>
-    </div>
-  </section>
-
-  <!-- Info Strip -->
-  <section class="py-16 px-6 bg-white">
+  <!-- Info strip -->
+  <section class="py-16 px-6 bg-brand-paper">
     <div class="max-w-3xl mx-auto">
       <div class="grid sm:grid-cols-3 gap-6 text-center">
-        <div class="p-6 rounded-[20px] bg-brand-paper border border-brand-teal/5">
+        <div class="p-6 rounded-[20px] bg-white border border-brand-teal/5">
           <div class="w-10 h-10 rounded-full bg-brand-teal/10 flex items-center justify-center mx-auto mb-3">
             <svg class="w-5 h-5 text-brand-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -44,7 +32,7 @@ import { BUSINESS } from "@/utils/constants";
           <p class="text-sm font-semibold text-brand-teal">Instant Confirmation</p>
           <p class="text-xs text-brand-charcoal/50 mt-1">Your booking is confirmed immediately</p>
         </div>
-        <div class="p-6 rounded-[20px] bg-brand-paper border border-brand-teal/5">
+        <div class="p-6 rounded-[20px] bg-white border border-brand-teal/5">
           <div class="w-10 h-10 rounded-full bg-brand-teal/10 flex items-center justify-center mx-auto mb-3">
             <svg class="w-5 h-5 text-brand-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
               <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
@@ -56,7 +44,7 @@ import { BUSINESS } from "@/utils/constants";
           <p class="text-sm font-semibold text-brand-teal">Auto-Syncs Calendar</p>
           <p class="text-xs text-brand-charcoal/50 mt-1">Rhonda's schedule updates in real time</p>
         </div>
-        <div class="p-6 rounded-[20px] bg-brand-paper border border-brand-teal/5">
+        <div class="p-6 rounded-[20px] bg-white border border-brand-teal/5">
           <div class="w-10 h-10 rounded-full bg-brand-teal/10 flex items-center justify-center mx-auto mb-3">
             <svg class="w-5 h-5 text-brand-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
               <circle cx="12" cy="12" r="10"/>

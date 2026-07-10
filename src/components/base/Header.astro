@@ -1,6 +1,6 @@
 ---
 import { NAV } from "@/utils/constants";
-import CalendlyPopup from "@/components/ui/CalendlyPopup.astro";
+import BookButton from "@/components/ui/BookButton.astro";
 ---
 
 <header class="fixed top-0 left-0 right-0 z-50 bg-brand-teal/95 backdrop-blur-sm border-b border-white/10">
@@ -30,7 +30,7 @@ import CalendlyPopup from "@/components/ui/CalendlyPopup.astro";
         </a>
       ))}
 
-      <CalendlyPopup label={NAV.cta.label} variant="primary-light" class="!px-5 !py-2 !text-sm" />
+      <BookButton label={NAV.cta.label} variant="primary-light" class="!px-5 !py-2 !text-sm" />
     </div>
 
     <!-- Mobile Hamburger -->
@@ -59,7 +59,7 @@ import CalendlyPopup from "@/components/ui/CalendlyPopup.astro";
         {link.label}
       </a>
     ))}
-    <CalendlyPopup label={NAV.cta.label} variant="primary-light" class="!px-5 !py-2 !text-sm w-full justify-center mt-4" />
+    <BookButton label={NAV.cta.label} variant="primary-light" class="!px-5 !py-2 !text-sm w-full justify-center mt-4" />
   </div>
 </header>
 

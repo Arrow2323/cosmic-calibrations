@@ -1,7 +1,7 @@
 ---
 import Layout from "@/components/base/Layout.astro";
 import Accordion from "@/components/ui/Accordion.astro";
-import CalendlyPopup from "@/components/ui/CalendlyPopup.astro";
+import BookButton from "@/components/ui/BookButton.astro";
 import faqData from "@/data/faq.json";
 ---
 
@@ -31,7 +31,7 @@ import faqData from "@/data/faq.json";
       <div class="mt-16 pt-8 border-t border-brand-teal/10 text-center">
         <p class="text-brand-charcoal/60 mb-4">Still have questions? Let's talk.</p>
         <div class="flex items-center justify-center gap-4">
-          <CalendlyPopup label="Book a Free Consult" variant="primary" />
+          <BookButton label="Book a Free Consult" variant="primary" />
           <a
             href="/contact"
             class="inline-flex items-center gap-2 text-brand-teal font-semibold hover:underline underline-offset-4"

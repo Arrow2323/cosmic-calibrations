@@ -61,7 +61,7 @@ import Layout from "@/components/base/Layout.astro";
           <p class="section-label mb-2">Dashboard</p>
           <h1 class="text-3xl font-heading font-bold text-brand-teal">Practice Overview</h1>
         </div>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { label: "Active Clients", value: "—", id: "stat-clients" },
             { label: "Sessions This Month", value: "—", id: "stat-sessions" },
@@ -74,7 +74,7 @@ import Layout from "@/components/base/Layout.astro";
             </div>
           `).join("")}
         </div>
-        <div class="grid md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-white rounded-[20px] border border-brand-teal/10 p-6">
             <h3 class="font-heading font-bold text-brand-teal mb-4">Quick Actions</h3>
             <div class="space-y-2">
@@ -105,7 +105,7 @@ import Layout from "@/components/base/Layout.astro";
           <p class="text-sm text-brand-charcoal/60 mt-2">Enter client birth data to generate session-by-session structural integration predictions.</p>
         </div>
         <form id="si-form" class="bg-white rounded-[20px] border border-brand-teal/10 p-6 shadow-sm">
-          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
             <div>
               <label class="block text-xs font-bold uppercase tracking-[0.12em] text-brand-grey mb-2">Client Name</label>
               <input type="text" id="si-name" placeholder="Jane Smith" class="w-full rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal transition-colors" />
@@ -149,7 +149,7 @@ import Layout from "@/components/base/Layout.astro";
           </div>
           <!-- Add Appointment Form (hidden) -->
           <form id="cal-form" class="hidden mt-4 p-4 bg-brand-paper rounded-xl space-y-3">
-            <div class="grid sm:grid-cols-3 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <input type="text" id="cal-client" placeholder="Client name" class="rounded-xl border border-brand-teal/15 px-3 py-2 text-sm focus:outline-none focus:border-brand-teal" />
               <input type="date" id="cal-date" class="rounded-xl border border-brand-teal/15 px-3 py-2 text-sm focus:outline-none focus:border-brand-teal" />
               <input type="time" id="cal-time" class="rounded-xl border border-brand-teal/15 px-3 py-2 text-sm focus:outline-none focus:border-brand-teal" />
@@ -169,7 +169,7 @@ import Layout from "@/components/base/Layout.astro";
           <h1 class="text-3xl font-heading font-bold text-brand-teal">SOAP Notes</h1>
         </div>
         <form id="soap-form" class="bg-white rounded-[20px] border border-brand-teal/10 p-6 shadow-sm space-y-4">
-          <div class="grid sm:grid-cols-3 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <input type="text" id="soap-client" placeholder="Client name" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
             <input type="date" id="soap-date" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
             <input type="number" id="soap-session" placeholder="Session #" min="1" max="10" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
@@ -203,7 +203,7 @@ import Layout from "@/components/base/Layout.astro";
           <button id="client-add-btn" class="rounded-full bg-brand-teal text-white font-semibold px-5 py-2.5 text-sm hover:bg-brand-teal-light transition-all">+ Add Client</button>
         </div>
         <form id="client-form" class="hidden bg-white rounded-[20px] border border-brand-teal/10 p-6 shadow-sm space-y-4">
-          <div class="grid sm:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <input type="text" id="client-name" placeholder="Full name" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
             <input type="email" id="client-email" placeholder="Email" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
             <input type="tel" id="client-phone" placeholder="Phone" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
@@ -215,7 +215,7 @@ import Layout from "@/components/base/Layout.astro";
             <button type="button" id="client-cancel" class="text-sm text-brand-grey hover:text-brand-charcoal transition-all font-medium">Cancel</button>
           </div>
         </form>
-        <div id="client-list" class="grid sm:grid-cols-2 gap-4"></div>
+        <div id="client-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
       </div>
 
       <!-- Financial Panel -->
@@ -224,7 +224,7 @@ import Layout from "@/components/base/Layout.astro";
           <p class="section-label mb-2">Business</p>
           <h1 class="text-3xl font-heading font-bold text-brand-teal">Financial</h1>
         </div>
-        <div class="grid sm:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
             { label: "Revenue MTD", id: "fin-revenue-mtd", value: "$0" },
             { label: "Revenue YTD", id: "fin-revenue-ytd", value: "$0" },
@@ -238,7 +238,7 @@ import Layout from "@/components/base/Layout.astro";
         </div>
         <div class="bg-white rounded-[20px] border border-brand-teal/10 p-6 shadow-sm">
           <h3 class="font-heading font-bold text-brand-teal mb-4">Add Transaction</h3>
-          <form id="fin-form" class="grid sm:grid-cols-4 gap-3 items-end">
+          <form id="fin-form" class="grid grid-cols-1 sm:grid-cols-4 gap-3 items-end">
             <input type="text" id="fin-desc" placeholder="Description" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
             <input type="number" id="fin-amount" placeholder="Amount ($)" step="0.01" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
             <select id="fin-type" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal">
@@ -258,7 +258,7 @@ import Layout from "@/components/base/Layout.astro";
           <p class="text-sm text-brand-charcoal/60 mt-2">Create and track client invoices. <a href="https://stripe.com" target="_blank" class="text-brand-teal hover:underline">Set up Stripe</a> to accept payments.</p>
         </div>
         <form id="invoice-form" class="bg-white rounded-[20px] border border-brand-teal/10 p-6 shadow-sm space-y-4">
-          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <input type="text" id="inv-client" placeholder="Client name" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
             <input type="number" id="inv-amount" placeholder="Amount ($)" step="0.01" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
             <input type="date" id="inv-due" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
@@ -266,7 +266,7 @@ import Layout from "@/components/base/Layout.astro";
               <option value="draft">Draft</option><option value="sent">Sent</option><option value="paid">Paid</option>
             </select>
           </div>
-          <div class="grid sm:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <input type="text" id="inv-desc" placeholder="Description (e.g., Session 3 — 10-Series)" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
             <input type="text" id="inv-link" placeholder="Stripe Payment Link (optional)" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
           </div>
@@ -274,7 +274,7 @@ import Layout from "@/components/base/Layout.astro";
             <button type="submit" class="rounded-full bg-brand-teal text-white font-semibold px-6 py-3 text-sm hover:bg-brand-teal-light shadow-sm transition-all">Save Invoice</button>
           </div>
         </form>
-        <div class="grid sm:grid-cols-2 gap-4" id="invoice-list"></div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="invoice-list"></div>
       </div>
     </main>
   </div>

@@ -1,0 +1,85 @@
+---
+import Layout from "@/components/base/Layout.astro";
+import Hero from "@/components/home/Hero.astro";
+import WhatIsSI from "@/components/home/WhatIsSI.astro";
+import WhoItIsFor from "@/components/home/WhoItIsFor.astro";
+import TenSeriesPreview from "@/components/home/TenSeriesPreview.astro";
+import PricingSection from "@/components/home/PricingSection.astro";
+import AboutSection from "@/components/home/AboutSection.astro";
+import ContactSection from "@/components/home/ContactSection.astro";
+import { BUSINESS } from "@/utils/constants";
+---
+
+<Layout
+  seo={{
+    title: "Sit without pain. Move without effort.",
+  }}
+>
+  <Hero />
+
+  <WhoItIsFor />
+
+  <!-- Explore links — editorial cards, not generic bento grid -->
+  <section class="py-16 px-6 bg-white">
+    <div class="max-w-4xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-6">
+        <a
+          href="/services"
+          class="group block rounded-[20px] border border-brand-teal/10 p-8 hover:border-brand-teal/30 hover:shadow-sm transition-all duration-300"
+        >
+          <div class="flex items-start gap-5">
+            <div class="w-12 h-12 rounded-[14px] bg-brand-teal/10 flex items-center justify-center shrink-0 group-hover:bg-brand-teal/15 transition-colors">
+              <svg class="w-6 h-6 text-brand-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-xl font-heading font-bold text-brand-teal mb-2">The 10-Series Protocol</h3>
+              <p class="text-brand-charcoal/60 text-sm leading-relaxed mb-4">
+                A deep dive into each of the ten sessions — what happens, what changes, and why the order matters.
+              </p>
+              <span class="text-brand-teal font-semibold text-sm group-hover:underline underline-offset-4">
+                Explore the series &rarr;
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <a
+          href="/faq"
+          class="group block rounded-[20px] border border-brand-teal/10 p-8 hover:border-brand-teal/30 hover:shadow-sm transition-all duration-300"
+        >
+          <div class="flex items-start gap-5">
+            <div class="w-12 h-12 rounded-[14px] bg-brand-teal/10 flex items-center justify-center shrink-0 group-hover:bg-brand-teal/15 transition-colors">
+              <svg class="w-6 h-6 text-brand-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-xl font-heading font-bold text-brand-teal mb-2">Common Questions</h3>
+              <p class="text-brand-charcoal/60 text-sm leading-relaxed mb-4">
+                What to expect in your first session, how SI differs from massage, and answers to the questions first-time clients ask most.
+              </p>
+              <span class="text-brand-teal font-semibold text-sm group-hover:underline underline-offset-4">
+                Read the FAQ &rarr;
+              </span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <WhatIsSI />
+
+  <TenSeriesPreview />
+
+  <PricingSection />
+
+  <AboutSection />
+
+  <ContactSection />
+</Layout>

@@ -1,0 +1,5 @@
+cosmic-calibrations/
+node_modules/
+dist/
+.astro/
+.env

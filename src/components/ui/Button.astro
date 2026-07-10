@@ -1,0 +1,41 @@
+---
+export interface Props {
+  href: string;
+  variant?: "primary" | "primary-light" | "outline" | "ghost";
+  size?: "sm" | "md" | "lg";
+  class?: string;
+}
+
+const {
+  href,
+  variant = "primary",
+  size = "md",
+  class: extraClass = "",
+} = Astro.props;
+
+const baseClasses = "inline-flex items-center gap-2 font-semibold transition-all duration-200 rounded-full";
+
+const variantClasses = {
+  primary:
+    "bg-brand-teal text-white hover:bg-brand-teal-light shadow-sm hover:shadow-md",
+  "primary-light":
+    "bg-white text-brand-teal hover:bg-white/90 shadow-sm",
+  outline:
+    "border-2 border-brand-teal text-brand-teal hover:bg-brand-teal hover:text-white",
+  ghost:
+    "text-brand-teal hover:bg-brand-teal/5",
+} as const;
+
+const sizeClasses = {
+  sm: "px-5 py-2 text-sm",
+  md: "px-7 py-3 text-base",
+  lg: "px-9 py-4 text-lg",
+} as const;
+---
+
+<a
+  href={href}
+  class={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${extraClass}`}
+>
+  <slot />
+</a>

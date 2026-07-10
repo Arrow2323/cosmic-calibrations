@@ -1,0 +1,73 @@
+---
+import Layout from "@/components/base/Layout.astro";
+import ContactForm from "@/components/ui/ContactForm.astro";
+import { BUSINESS } from "@/utils/constants";
+---
+
+<Layout seo={{ title: "Contact" }}>
+  <section class="pt-28 pb-24 px-6 bg-white">
+    <div class="max-w-6xl mx-auto">
+      <!-- Header -->
+      <div class="mb-16 text-center">
+        <p class="section-label mb-4">Get in Touch</p>
+        <h1 class="text-4xl md:text-5xl font-heading font-bold text-brand-teal mb-4">
+          Let's talk
+        </h1>
+        <p class="text-lg text-brand-charcoal/60 max-w-xl mx-auto">
+          Start with a free 15-minute phone consultation. We'll discuss what you're
+          experiencing and whether Structural Integration is right for you.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-5 gap-12 lg:gap-16">
+        <!-- Contact Info -->
+        <div class="lg:col-span-2 space-y-8">
+          <div>
+            <h3 class="font-heading font-bold text-lg text-brand-teal mb-4">Contact Info</h3>
+            <div class="space-y-4 text-brand-charcoal/70 text-sm">
+              <p class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-brand-teal shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                <a href={`mailto:${BUSINESS.email}`} class="hover:text-brand-teal transition-colors">
+                  {BUSINESS.email}
+                </a>
+              </p>
+              <p class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-brand-teal shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                <span>{BUSINESS.location}</span>
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="font-heading font-bold text-lg text-brand-teal mb-4">Hours</h3>
+            <div class="space-y-1 text-brand-charcoal/60 text-sm">
+              <p class="font-medium text-brand-charcoal">Monday – Friday</p>
+              <p>9:00 AM – 6:00 PM</p>
+              <p class="text-xs text-brand-grey mt-2">By appointment only</p>
+            </div>
+          </div>
+
+          <div class="pt-6 border-t border-brand-teal/10">
+            <h3 class="font-heading font-bold text-lg text-brand-teal mb-4">Response Time</h3>
+            <p class="text-sm text-brand-charcoal/60 leading-relaxed">
+              We respond to all inquiries within 24 hours during business days.
+              For urgent matters, please call or text.
+            </p>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="lg:col-span-3 bg-brand-paper rounded-[24px] p-8 border border-brand-teal/10">
+          <h3 class="font-heading font-bold text-xl text-brand-teal mb-6">Send a message</h3>
+          <ContactForm />
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

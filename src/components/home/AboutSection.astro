@@ -1,0 +1,96 @@
+---
+import { BUSINESS } from "@/utils/constants";
+import PhotoFrame from "@/components/ui/PhotoFrame.astro";
+---
+
+<!--
+  About Rhonda — bio section with photo frame + overlapping BCSI badge.
+  Bio text mined verbatim from existing site.
+-->
+<section id="about" class="py-24 md:py-32 px-6 bg-white">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <!-- Photo column -->
+      <div class="relative">
+        <PhotoFrame
+          alt={`${BUSINESS.practitioner}, ${BUSINESS.credentials}`}
+          aspectRatio="4/5"
+          class="shadow-lg"
+        />
+
+        <!-- BCSI Badge — overlapping -->
+        <div class="absolute -bottom-6 -right-6 w-40 h-40 bg-brand-teal rounded-[24px] flex items-center justify-center p-6 text-white shadow-xl">
+          <div class="text-center">
+            <div class="text-2xl font-heading font-black mb-1">{BUSINESS.credentials}</div>
+            <div class="text-[9px] uppercase tracking-widest font-semibold opacity-70 leading-tight">
+              Board Certified<br />Structural Integrator
+            </div>
+            <div class="text-[7px] uppercase tracking-[0.15em] font-medium opacity-50 mt-0.5">
+              IASI Certified
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bio column -->
+      <div class="flex flex-col gap-8">
+        <div>
+          <p class="section-label mb-4">About Your Practitioner</p>
+          <h2 class="text-3xl md:text-4xl font-heading font-bold text-brand-teal mb-6">
+            {BUSINESS.practitioner}, {BUSINESS.credentials}
+          </h2>
+
+          <div class="prose-cosmic space-y-4">
+            <p>
+              Have you ever noticed how your body seems to remember your day long after you've
+              clocked out? Maybe it's the way your shoulders creep up toward your ears during
+              a long afternoon at your desk, or that subtle "locked up" feeling in your back
+              that's started to feel like a normal part of life. I'm {BUSINESS.practitioner}, and I believe
+              your body has an incredible story to tell&mdash;and sometimes, it just needs a little
+              help finding a more comfortable narrative.
+            </p>
+            <p>
+              I came to Structural Integration because I was tired of watching the people I
+              care about feel physically "dismantled" by our modern, sedentary world. Think of
+              your body's fascia&mdash;the connective tissue that wraps everything inside you&mdash;like
+              a wetsuit that's become a bit too tight or twisted. It shapes how you move,
+              breathe, and even how you feel in your own skin. The BCSI credential&mdash;earned
+              through 500+ hours of specialized training and a rigorous IASI board exam&mdash;
+              represents the field's highest professional designation. As a Board Certified
+              Structural Integrator, I don't just "fix" problems; I work with you to unwind
+              those old patterns and find a sense of ease that you might have forgotten was
+              possible.
+            </p>
+            <p>
+              Take a moment right now to just notice your breath. Where does it go? Does it
+              feel like it has room to expand, or does it feel compressed? My work at Cosmic
+              Calibrations is about creating that room&mdash;giving your structure the space and
+              length it needs to thrive. I'm honored to be part of the Calibration Collective
+              here in Austin, and I'd love to help you rediscover what it feels like to live
+              in a body that feels balanced and grounded.
+            </p>
+          </div>
+        </div>
+
+        <!-- Credentials Grid -->
+        <div class="grid grid-cols-2 gap-3">
+          {[
+            { label: "Board Certified (BCSI)" },
+            { label: "Fully Insured" },
+            { label: "Evidence-Based Protocols" },
+            { label: "IASI-Recognized Training" },
+          ].map((item) => (
+            <div class="flex items-center gap-3 rounded-[14px] bg-brand-paper border border-brand-teal/5 p-3">
+              <div class="shrink-0 w-9 h-9 rounded-[10px] bg-white flex items-center justify-center text-brand-teal border border-brand-teal/10">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+              <span class="text-xs font-semibold text-brand-teal">{item.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

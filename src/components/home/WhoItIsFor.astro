@@ -1,0 +1,77 @@
+---
+const audiences = [
+  {
+    title: "Desk-Bound Professionals",
+    subtitle: "You spend 8+ hours shaping your fascia into a C-curve",
+    body: "Tech Neck. Anterior Pelvic Tilt. The slouched thoracolumbar pattern that keeps you in chronic tension. We reverse the structural damage of sitting — session by session, layer by layer.",
+    outcome: "Sit through meetings without noticing your body.",
+  },
+  {
+    title: "Post-Surgical Recovery",
+    subtitle: "Surgery leaves internal scar tissue that limits your range",
+    body: "Adhesions between tissue layers restrict movement long after the incision heals. Our systematic bodywork restores glide between fascial planes — precisely, methodically, permanently.",
+    outcome: "Move freely again, without compensation patterns.",
+  },
+  {
+    title: "Active Bodies Seeking Ease",
+    subtitle: "You move well, but something still feels off",
+    body: "Athletes, yogis, dancers, and weekend warriors often discover that certain restrictions won't resolve through exercise alone. SI addresses the underlying fascial organization that no amount of stretching can reach.",
+    outcome: "Find the ease and range you know should be there.",
+  },
+];
+---
+
+<!--
+  Who It's For — 3 editorial audience cards.
+  Photo-driven layout, not icon-cards. Clean serif headings.
+  Each card has: title, subtitle (problem), body (solution), outcome.
+-->
+<section class="py-24 md:py-32 px-6 bg-brand-paper">
+  <div class="max-w-6xl mx-auto">
+    <!-- Section Header -->
+    <div class="mb-16">
+      <p class="section-label mb-4">Who It's For</p>
+      <h2 class="text-3xl md:text-4xl font-heading font-bold text-brand-teal mb-4">
+        Your body is telling you something
+      </h2>
+      <p class="text-lg text-brand-charcoal/60 max-w-2xl">
+        Structural Integration helps when conventional approaches — massage, stretching,
+        exercise — have hit their limit.
+      </p>
+    </div>
+
+    <!-- Audience Cards — editorial magazine style -->
+    <div class="grid md:grid-cols-3 gap-10">
+      {audiences.map((item) => (
+        <div class="flex flex-col gap-4">
+          <!-- Number accent -->
+          <div class="w-12 h-12 rounded-full bg-brand-teal/10 flex items-center justify-center mb-2">
+            <span class="text-brand-teal font-heading font-bold text-xl">?</span>
+          </div>
+
+          <h3 class="text-xl font-heading font-bold text-brand-teal leading-tight">
+            {item.title}
+          </h3>
+
+          <p class="text-sm text-brand-grey font-semibold uppercase tracking-[0.08em] leading-snug">
+            {item.subtitle}
+          </p>
+
+          <p class="text-brand-charcoal/70 leading-relaxed text-sm">
+            {item.body}
+          </p>
+
+          <!-- Outcome -->
+          <div class="mt-auto pt-4 border-t border-brand-teal/10">
+            <p class="text-xs text-brand-grey uppercase tracking-[0.12em] font-bold mb-1">
+              The Result
+            </p>
+            <p class="text-sm text-brand-teal font-heading italic font-semibold">
+              "{item.outcome}"
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

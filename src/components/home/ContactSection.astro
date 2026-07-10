@@ -1,0 +1,83 @@
+---
+import { BUSINESS } from "@/utils/constants";
+import ContactForm from "@/components/ui/ContactForm.astro";
+---
+
+<!--
+  Contact section — dark teal background, two columns.
+  Left: contact info. Right: contact form card.
+  Mines existing layout, replaces Resend with Web3Forms.
+-->
+<section id="contact" class="py-24 md:py-32 px-6 bg-brand-teal relative overflow-hidden">
+  <!-- Subtle dot pattern -->
+  <div
+    class="absolute inset-0 opacity-[0.05]"
+    style="background-image: radial-gradient(circle, #94A3B8 1px, transparent 1px); background-size: 40px 40px;"
+    aria-hidden="true"
+  ></div>
+
+  <div class="relative z-10 max-w-6xl mx-auto">
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      <p class="section-label mb-4 text-brand-grey/80">Get in Touch</p>
+      <h2 class="text-3xl md:text-4xl font-heading font-bold text-white mb-4">
+        Ready to feel different in your body?
+      </h2>
+      <p class="text-lg text-white/60 max-w-2xl mx-auto leading-relaxed">
+        Start with a free 15-minute phone consultation. We'll talk about what you're
+        experiencing and whether Structural Integration is the right fit.
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+      <!-- Left: Contact Info -->
+      <div class="text-white space-y-8">
+        <div>
+          <h3 class="font-heading font-bold text-xl mb-4 text-brand-grey">Contact</h3>
+          <div class="space-y-4 text-white/70 text-sm">
+            <p class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-brand-grey shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              <a href={`mailto:${BUSINESS.email}`} class="hover:text-white transition-colors">
+                {BUSINESS.email}
+              </a>
+            </p>
+            <p class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-brand-grey shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              <span>{BUSINESS.location}</span>
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-heading font-bold text-xl mb-4 text-brand-grey">Hours</h3>
+          <div class="space-y-1 text-white/60 text-sm">
+            <p>Monday – Friday</p>
+            <p>9:00 AM – 6:00 PM</p>
+            <p class="text-xs text-white/30 mt-2">By appointment only</p>
+          </div>
+        </div>
+
+        <div class="pt-6 border-t border-white/10">
+          <p class="text-xs text-white/40 leading-relaxed">
+            Your privacy matters. Information submitted through this form is used
+            only to respond to your inquiry. We never share or sell your data.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right: Contact Form -->
+      <div class="bg-white rounded-[24px] p-8 shadow-xl">
+        <h3 class="font-heading font-bold text-xl text-brand-teal mb-6">
+          Send a message
+        </h3>
+        <ContactForm />
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,116 @@
+---
+import Layout from "@/components/base/Layout.astro";
+import PhotoFrame from "@/components/ui/PhotoFrame.astro";
+import { BUSINESS } from "@/utils/constants";
+---
+
+<Layout seo={{ title: `About ${BUSINESS.practitioner}, ${BUSINESS.credentials}` }}>
+  <section class="pt-28 pb-24 px-6 bg-white">
+    <div class="max-w-6xl mx-auto">
+      <!-- Page Header -->
+      <div class="mb-16">
+        <p class="section-label mb-4">About Your Practitioner</p>
+        <h1 class="text-4xl md:text-5xl font-heading font-bold text-brand-teal mb-4">
+          {BUSINESS.practitioner}, {BUSINESS.credentials}
+        </h1>
+        <p class="text-lg text-brand-charcoal/60 max-w-2xl">
+          {BUSINESS.credentialsFull} — {BUSINESS.location}
+        </p>
+      </div>
+
+      <!-- Bio + Photo -->
+      <div class="grid lg:grid-cols-2 gap-16 items-start">
+        <!-- Photo Column -->
+        <div class="space-y-6">
+          <PhotoFrame
+            alt={`${BUSINESS.practitioner}, ${BUSINESS.credentials}`}
+            aspectRatio="4/5"
+            class="shadow-lg sticky top-24"
+          />
+
+          <!-- Credentials list -->
+          <div class="space-y-3">
+            {[
+              { label: "Board Certified (BCSI)", desc: "IASI Board Certification — the field's highest credential" },
+              { label: "500+ Hours Training", desc: "IASI-recognized program at the Structura Institute" },
+              { label: "Fully Insured", desc: "Professional liability coverage for your peace of mind" },
+              { label: "Evidence-Based", desc: "Protocols grounded in modern fascial research" },
+            ].map((item) => (
+              <div class="flex items-center gap-4 rounded-[16px] bg-brand-paper border border-brand-teal/5 p-4">
+                <div class="shrink-0 w-10 h-10 rounded-[12px] bg-white flex items-center justify-center text-brand-teal border border-brand-teal/10">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-brand-teal">{item.label}</p>
+                  <p class="text-xs text-brand-charcoal/50">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Bio Column -->
+        <div class="prose-cosmic space-y-6">
+          <p>
+            Have you ever noticed how your body seems to remember your day long after you've
+            clocked out? Maybe it's the way your shoulders creep up toward your ears during
+            a long afternoon at your desk, or that subtle "locked up" feeling in your back
+            that's started to feel like a normal part of life. I'm {BUSINESS.practitioner}, and I believe
+            your body has an incredible story to tell — and sometimes, it just needs a little
+            help finding a more comfortable narrative.
+          </p>
+
+          <h2 class="text-2xl font-heading font-bold text-brand-teal mt-10 mb-4">Why Structural Integration</h2>
+          <p>
+            I came to Structural Integration because I was tired of watching the people I
+            care about feel physically "dismantled" by our modern, sedentary world. Think of
+            your body's fascia — the connective tissue that wraps everything inside you — like
+            a wetsuit that's become a bit too tight or twisted. It shapes how you move,
+            breathe, and even how you feel in your own skin.
+          </p>
+          <p>
+            The BCSI credential — earned through 500+ hours of specialized training and a
+            rigorous IASI board exam — represents the field's highest professional designation.
+            As a Board Certified Structural Integrator, I don't just "fix" problems; I work
+            with you to unwind those old patterns and find a sense of ease that you might have
+            forgotten was possible.
+          </p>
+
+          <h2 class="text-2xl font-heading font-bold text-brand-teal mt-10 mb-4">My Approach</h2>
+          <p>
+            Take a moment right now to just notice your breath. Where does it go? Does it
+            feel like it has room to expand, or does it feel compressed? My work at Cosmic
+            Calibrations is about creating that room — giving your structure the space and
+            length it needs to thrive.
+          </p>
+          <p>
+            Every session is a collaboration. I listen to what your body is communicating
+            through its holding patterns, asymmetries, and restrictions. Then we work together —
+            through precise manual techniques and your own movement awareness — to release
+            what's been stuck and integrate what's been disconnected.
+          </p>
+          <p>
+            I'm honored to be part of the Calibration Collective here in Austin, and I'd love
+            to help you rediscover what it feels like to live in a body that feels balanced
+            and grounded.
+          </p>
+
+          <!-- CTA -->
+          <div class="mt-12 pt-8 border-t border-brand-teal/10">
+            <a
+              href="/#contact"
+              class="inline-flex items-center gap-2 rounded-full bg-brand-teal text-white font-semibold px-8 py-4 text-base hover:bg-brand-teal-light shadow-sm hover:shadow-md transition-all"
+            >
+              Book a Free 15-Min Consult
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

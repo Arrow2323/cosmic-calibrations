@@ -1,0 +1,94 @@
+---
+export interface Props {
+  items: { q: string; a: string }[];
+  class?: string;
+}
+
+const { items, class: extraClass = "" } = Astro.props;
+---
+
+<!--
+  Accordion component — plain HTML + minimal JS.
+  Each item toggles open/closed. Only one open at a time.
+-->
+<div class={`flex flex-col border-t border-brand-teal/10 ${extraClass}`}>
+  {items.map((item, index) => (
+    <div class="border-b border-brand-teal/10">
+      <button
+        type="button"
+        class="accordion-toggle w-full py-6 flex items-center justify-between text-left hover:text-brand-teal transition-colors group"
+        aria-expanded="false"
+        data-index={String(index)}
+      >
+        <span class="text-base md:text-lg font-heading font-semibold pr-4 text-brand-charcoal group-hover:text-brand-teal transition-colors">
+          {item.q}
+        </span>
+        <svg
+          class="accordion-icon h-5 w-5 shrink-0 transition-transform duration-300 text-brand-grey group-hover:text-brand-teal"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        >
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+      <div
+        class="accordion-panel overflow-hidden transition-all duration-300 ease-in-out"
+        style="max-height: 0; opacity: 0;"
+      >
+        <p class="pb-6 text-brand-charcoal/70 leading-relaxed text-sm md:text-base">
+          {item.a}
+        </p>
+      </div>
+    </div>
+  ))}
+</div>
+
+<script>
+  document.querySelectorAll(".accordion-toggle").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const panel = btn.nextElementSibling as HTMLElement | null;
+      const icon = btn.querySelector(".accordion-icon");
+      const isOpen = btn.getAttribute("aria-expanded") === "true";
+
+      // Close all others
+      document.querySelectorAll(".accordion-toggle").forEach((other) => {
+        if (other !== btn && other.getAttribute("aria-expanded") === "true") {
+          other.setAttribute("aria-expanded", "false");
+          const otherPanel = other.nextElementSibling as HTMLElement | null;
+          const otherIcon = other.querySelector(".accordion-icon");
+          if (otherPanel) {
+            otherPanel.style.maxHeight = "0";
+            otherPanel.style.opacity = "0";
+          }
+          if (otherIcon) {
+            otherIcon.style.transform = "rotate(0deg)";
+          }
+        }
+      });
+
+      // Toggle current
+      if (isOpen) {
+        btn.setAttribute("aria-expanded", "false");
+        if (panel) {
+          panel.style.maxHeight = "0";
+          panel.style.opacity = "0";
+        }
+        if (icon) {
+          icon.style.transform = "rotate(0deg)";
+        }
+      } else {
+        btn.setAttribute("aria-expanded", "true");
+        if (panel) {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+          panel.style.opacity = "1";
+        }
+        if (icon) {
+          icon.style.transform = "rotate(180deg)";
+        }
+      }
+    });
+  });
+</script>

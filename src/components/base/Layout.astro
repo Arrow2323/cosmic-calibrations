@@ -1,0 +1,27 @@
+---
+import Header from "./Header.astro";
+import Footer from "./Footer.astro";
+import SEO from "./SEO.astro";
+import type { Props as SEOProps } from "./SEO.astro";
+
+export interface Props {
+  seo?: SEOProps;
+  containerClass?: string;
+}
+
+const { seo = {}, containerClass = "" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <SEO {...seo} />
+  </head>
+  <body class="min-h-screen flex flex-col bg-brand-paper text-brand-charcoal font-body antialiased">
+    <Header />
+    <main class={`flex-1 ${containerClass}`}>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

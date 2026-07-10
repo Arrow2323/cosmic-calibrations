@@ -1,0 +1,106 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+}
+
+const siteName = "Cosmic Calibrations";
+
+const {
+  title,
+  description = "Structural Integration in Austin, TX — Rhonda Roberts, BCSI. Specialized bodywork for desk-bound professionals and post-surgical recovery. The 10-Series Recovery Protocol.",
+  image = "/og-default.jpg",
+  noindex = false,
+} = Astro.props;
+
+const pageTitle = title ? `${title} | ${siteName}` : `${siteName} | Structural Integration`;
+---
+
+<!-- Primary Meta -->
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={image} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content="en_US" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image} />
+
+<!-- Robots -->
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<!-- Schema.org LocalBusiness -->
+<script type="application/ld+json" set:html>
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Cosmic Calibrations LLC",
+  "description": "Structural Integration bodywork practice in Austin, TX. Specializing in the 10-Series Recovery Protocol for desk workers and post-surgical recovery.",
+  "url": "https://cosmiccalibrations.com",
+  "telephone": "",
+  "email": "rhonda@cosmiccalibrations.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Austin",
+    "addressRegion": "TX",
+    "addressCountry": "US"
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    "opens": "09:00",
+    "closes": "18:00"
+  },
+  "priceRange": "$$",
+  "currenciesAccepted": "USD",
+  "paymentAccepted": "Cash, Credit Card",
+  "areaServed": {
+    "@type": "City",
+    "name": "Austin"
+  },
+  "founder": {
+    "@type": "Person",
+    "name": "Rhonda Roberts",
+    "jobTitle": "Board Certified Structural Integrator (BCSI)",
+    "description": "Board Certified Structural Integrator with IASI-recognized training, specializing in the 10-Series protocol for structural and postural integration."
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Structural Integration Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Single Session",
+          "description": "75–90 minute one-on-one hands-on Structural Integration session"
+        },
+        "price": "165.00",
+        "priceCurrency": "USD"
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "10-Series Package",
+          "description": "Complete ten-session Structural Integration protocol for systematic, lasting structural change"
+        },
+        "price": "1500.00",
+        "priceCurrency": "USD"
+      }
+    ]
+  }
+}
+</script>

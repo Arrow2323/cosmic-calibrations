@@ -1,0 +1,76 @@
+---
+import Layout from "@/components/base/Layout.astro";
+import { getCollection } from "astro:content";
+import { PRICING } from "@/utils/constants";
+
+const sessions = await getCollection("sessions");
+const sorted = sessions.sort((a, b) => a.data.num - b.data.num);
+---
+
+<Layout seo={{ title: "The 10-Series Protocol" }}>
+  <!-- Header -->
+  <section class="pt-28 pb-16 px-6 bg-white">
+    <div class="max-w-4xl mx-auto text-center">
+      <p class="section-label mb-4">Our Services</p>
+      <h1 class="text-4xl md:text-5xl font-heading font-bold text-brand-teal mb-6">
+        The 10-Series Recovery Protocol
+      </h1>
+      <p class="text-lg text-brand-charcoal/60 max-w-2xl mx-auto leading-relaxed">
+        A systematic journey through your body's architecture. Each session builds upon
+        the last — methodically releasing chronic tension and reorganizing your structure.
+        The order matters. The progression is designed.
+      </p>
+    </div>
+  </section>
+
+  <!-- Session Detail Cards -->
+  <section class="py-16 px-6 bg-brand-paper">
+    <div class="max-w-4xl mx-auto space-y-6">
+      {sorted.map((session) => (
+        <div class="rounded-[20px] bg-white border border-brand-teal/10 p-8 md:p-10 flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+          <!-- Number -->
+          <div class="shrink-0 w-16 h-16 rounded-[18px] bg-brand-teal/10 flex items-center justify-center">
+            <span class="text-2xl font-heading font-black text-brand-teal">
+              {String(session.data.num).padStart(2, "0")}
+            </span>
+          </div>
+
+          <!-- Content -->
+          <div class="space-y-3">
+            <div>
+              <h2 class="text-xl md:text-2xl font-heading font-bold text-brand-teal mb-1">
+                {session.data.title}
+              </h2>
+              <p class="text-xs font-bold uppercase tracking-[0.15em] text-brand-grey">
+                Focus: {session.data.focus}
+              </p>
+            </div>
+            <p class="text-brand-charcoal/70 leading-relaxed">
+              {session.data.desc}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="py-16 px-6 bg-white">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl font-heading font-bold text-brand-teal mb-8">Pricing</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="rounded-[20px] border border-brand-teal/10 p-8 bg-brand-paper text-left">
+          <p class="text-xs font-bold uppercase tracking-[0.15em] text-brand-grey mb-3">Single Session</p>
+          <p class="text-4xl font-heading font-black text-brand-teal mb-2">${PRICING.singleSession}</p>
+          <p class="text-sm text-brand-charcoal/60">75–90 minutes • One-on-one • Postural assessment included</p>
+        </div>
+        <div class="rounded-[20px] border-2 border-brand-teal bg-brand-teal/5 p-8 text-left relative">
+          <span class="absolute -top-3 right-6 bg-brand-teal text-white text-[10px] font-bold uppercase tracking-[0.2em] px-3 py-1 rounded-full">Best Value</span>
+          <p class="text-xs font-bold uppercase tracking-[0.15em] text-brand-grey mb-3">10-Series Package</p>
+          <p class="text-4xl font-heading font-black text-brand-teal mb-2">${PRICING.tenSeries.toLocaleString()}</p>
+          <p class="text-sm text-brand-charcoal/60">All 10 sessions • Save ${PRICING.savings} • Sessions never expire</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

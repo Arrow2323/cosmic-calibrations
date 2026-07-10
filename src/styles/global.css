@@ -1,0 +1,75 @@
+/* Crimson Text — warm serif for headings */
+@import url("https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap");
+
+/* Source Sans 3 — clean humanist sans for body */
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-brand-paper text-brand-charcoal font-body;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading;
+  }
+
+  /* Focus visible — clean teal outline */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-teal rounded-sm;
+  }
+
+  /* Selection */
+  ::selection {
+    @apply bg-brand-teal/20 text-brand-teal;
+  }
+}
+
+@layer components {
+  /* Section label — uppercase tracked label above headings */
+  .section-label {
+    @apply text-section-label text-brand-grey uppercase tracking-[0.2em] font-bold;
+  }
+
+  /* Prose for long-form content */
+  .prose-cosmic {
+    @apply text-brand-charcoal/80 leading-relaxed space-y-4;
+  }
+
+  .prose-cosmic p {
+    @apply leading-relaxed;
+  }
+
+  /* Organic divider — subtle curved section separator */
+  .divider-organic {
+    @apply relative h-16 overflow-hidden;
+  }
+
+  .divider-organic::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120%;
+    height: 80px;
+    border-radius: 50%;
+    @apply bg-brand-paper;
+  }
+}

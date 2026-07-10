@@ -1,0 +1,74 @@
+---
+import Button from "@/components/ui/Button.astro";
+import PhotoFrame from "@/components/ui/PhotoFrame.astro";
+---
+
+<!--
+  Hero section — asymmetric layout.
+  No floating blobs. No gradient text. No centered CTA.
+  Solid teal background with subtle organic dot-mesh pattern overlay.
+  Left: text + CTAs + credentials. Right: photo frame.
+-->
+<section class="relative min-h-screen flex items-center overflow-hidden bg-brand-teal">
+  <!-- Subtle organic fascial-mesh pattern overlay (CSS dot pattern, not floating blobs) -->
+  <div
+    class="absolute inset-0 opacity-[0.07]"
+    style="background-image: radial-gradient(circle, #94A3B8 1px, transparent 1px); background-size: 48px 48px;"
+    aria-hidden="true"
+  ></div>
+
+  <div class="relative z-10 w-full max-w-6xl mx-auto px-6 pt-20 pb-16 md:pt-28 md:pb-20">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <!-- Text column -->
+      <div class="flex flex-col gap-6 md:gap-8">
+        <!-- Section label -->
+        <p class="inline-flex self-start text-[11px] font-bold uppercase tracking-[0.2em] text-brand-grey/90 border border-white/15 rounded-full px-4 py-1.5 bg-white/5">
+          Structural Recovery for the Modern Professional
+        </p>
+
+        <!-- Headline — serif, no gradient -->
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-white leading-[1.12]">
+          Sit without pain.<br />
+          <span class="text-brand-grey">Move without effort.</span>
+        </h1>
+
+        <p class="text-lg sm:text-xl text-white/70 max-w-lg leading-relaxed">
+          Specialized Structural Integration that reverses the damage of desk work.
+          We rebuild your fascia around gravity so your body holds itself — no forcing,
+          no fighting, just ease.
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex flex-col sm:flex-row gap-4">
+          <Button href="#contact" variant="primary-light" size="lg">
+            Book Free 15-Min Consult
+          </Button>
+          <Button href="#pricing" variant="ghost" size="lg" class="border border-white/30 text-white hover:bg-white/10">
+            View Pricing
+          </Button>
+        </div>
+
+        <!-- Credentials row -->
+        <div class="flex flex-wrap gap-x-8 gap-y-3 text-sm text-white/60 pt-6 border-t border-white/10">
+          <span class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-brand-grey shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+            Board Certified (IASI)
+          </span>
+          <span class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-brand-grey shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Fully Insured Practice
+          </span>
+          <span class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-brand-grey shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            10-Series Specialist
+          </span>
+        </div>
+      </div>
+
+      <!-- Visual column — single elegant photo frame -->
+      <div class="hidden lg:block">
+        <PhotoFrame alt="Rhonda Roberts, BCSI" aspectRatio="4/5" class="shadow-2xl shadow-black/20" />
+      </div>
+    </div>
+  </div>
+</section>

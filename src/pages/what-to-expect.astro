@@ -1,0 +1,123 @@
+---
+import Layout from "@/components/base/Layout.astro";
+
+const steps = [
+  {
+    title: "Before You Arrive",
+    items: [
+      "Wear comfortable, flexible clothing — athletic shorts and a tank top or sports bra work well. You'll remain clothed during the session.",
+      "Avoid heavy meals right before your appointment. A light snack is fine.",
+      "Arrive a few minutes early so we can start relaxed, not rushed.",
+      "No special preparation needed — just come as you are.",
+    ],
+  },
+  {
+    title: "The Body Reading",
+    items: [
+      "We start standing. I'll watch how you hold yourself, how you walk, where your weight shifts.",
+      "This isn't a judgment — it's information. Your posture tells the story of your daily habits, old injuries, and compensations.",
+      "Together we identify the patterns we'll work with during the session.",
+    ],
+  },
+  {
+    title: "On the Table",
+    items: [
+      "You'll lie on a bodywork table, face-up or face-down depending on the session focus.",
+      "I use precise manual pressure and guided movement to release fascial restrictions. You may be asked to make small, slow movements while I work.",
+      "The sensation is often described as a deep stretch or a feeling of tissue 'unwinding.' It can be intense, but never sharp or unbearable.",
+      "Communication is key — I'll check in regularly about pressure and comfort.",
+    ],
+  },
+  {
+    title: "After the Session",
+    items: [
+      "Drink plenty of water. Your body is processing changes at the tissue level.",
+      "You might feel taller, lighter, or like you're walking differently. This is normal — your structure is reorganizing.",
+      "Some people feel energetic, others feel ready for a nap. Both are fine. Listen to your body.",
+      "I may give you simple movement or awareness exercises to support the work between sessions.",
+    ],
+  },
+];
+---
+
+<Layout seo={{ title: "What to Expect" }}>
+  <!-- Header -->
+  <section class="pt-28 pb-16 px-6 bg-white">
+    <div class="max-w-4xl mx-auto">
+      <p class="section-label mb-4">Your First Visit</p>
+      <h1 class="text-4xl md:text-5xl font-heading font-bold text-brand-teal mb-6">
+        What to Expect
+      </h1>
+      <p class="text-lg text-brand-charcoal/60 max-w-2xl leading-relaxed">
+        Never had Structural Integration before? Here's a walkthrough of what happens —
+        from the moment you arrive to how you'll feel afterward.
+      </p>
+    </div>
+  </section>
+
+  <!-- Steps -->
+  <section class="py-16 px-6 bg-brand-paper">
+    <div class="max-w-4xl mx-auto space-y-16">
+      {steps.map((step, i) => (
+        <div class="flex flex-col md:flex-row gap-6 md:gap-10">
+          <!-- Step number -->
+          <div class="shrink-0 flex items-start gap-4 md:w-48">
+            <div class="w-10 h-10 rounded-full bg-brand-teal flex items-center justify-center shrink-0">
+              <span class="text-white font-heading font-bold text-lg">{i + 1}</span>
+            </div>
+            <h2 class="text-xl font-heading font-bold text-brand-teal pt-1.5">{step.title}</h2>
+          </div>
+
+          <!-- Items -->
+          <div class="flex-1 space-y-4 pt-1">
+            {step.items.map((item) => (
+              <div class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-brand-grey shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <p class="text-brand-charcoal/80 leading-relaxed">{item}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Somatic check-in -->
+  <section class="py-16 px-6 bg-white">
+    <div class="max-w-3xl mx-auto text-center">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand-teal/10 mb-6">
+        <svg class="w-8 h-8 text-brand-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 6v6l4 2"/>
+        </svg>
+      </div>
+      <h2 class="text-2xl font-heading font-bold text-brand-teal mb-4">
+        Pause. Notice your breath.
+      </h2>
+      <p class="text-brand-charcoal/60 leading-relaxed max-w-xl mx-auto">
+        Right now, wherever you are, take one slow breath and notice where it goes.
+        Does it fill your chest? Your belly? Your back? This awareness — of how your
+        body actually feels in this moment — is the beginning of the work we'll do together.
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 px-6 bg-brand-teal text-center">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="text-3xl font-heading font-bold text-white mb-4">Ready to begin?</h2>
+      <p class="text-white/70 mb-8">Start with a free 15-minute phone consultation.</p>
+      <a
+        href="/#contact"
+        class="inline-flex items-center gap-2 rounded-full bg-white text-brand-teal font-semibold px-8 py-4 text-base hover:bg-white/90 shadow-sm transition-all"
+      >
+        Book Free Consult
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+</Layout>

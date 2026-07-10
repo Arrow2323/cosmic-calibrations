@@ -1,0 +1,57 @@
+---
+const cards = [
+  {
+    title: "Not Massage",
+    body: "Structural Integration isn't deep tissue massage. Massage relaxes muscles temporarily. SI systematically reorganizes your fascia — the connective tissue web that shapes your posture — so the changes last.",
+    accent: "Session by session, layer by layer.",
+  },
+  {
+    title: "Fascia Is Architecture",
+    body: "Fascia is the body's internal scaffolding. It wraps every muscle, bone, and organ. When fascia shortens from desk work, injury, or surgery, it pulls your whole structure out of alignment. SI lengthens and rebalances it.",
+    accent: "We work with your body's blueprint.",
+  },
+  {
+    title: "Ida Rolf's Legacy",
+    body: "Dr. Ida Rolf developed this work in the mid-20th century after discovering that gravity, fascia, and posture are inseparably linked. Today, modern fascial research continues to validate what she observed: structural change is possible at any age.",
+    accent: "70+ years of clinical results.",
+  },
+];
+---
+
+<!--
+  What Is SI — 3 educational cards.
+  Left accent border instead of generic box-shadows.
+  Serif headings. Clean, editorial feel.
+-->
+<section class="py-24 md:py-32 px-6 bg-white">
+  <div class="max-w-6xl mx-auto">
+    <!-- Section Header -->
+    <div class="mb-16">
+      <p class="section-label mb-4">Understanding the Work</p>
+      <h2 class="text-3xl md:text-4xl font-heading font-bold text-brand-teal mb-4">
+        More than bodywork
+      </h2>
+      <p class="text-lg text-brand-charcoal/60 max-w-2xl">
+        Structural Integration is a systematic approach to reorganizing your body's
+        connective tissue. Here's what sets it apart.
+      </p>
+    </div>
+
+    <!-- Cards — left-border accent style -->
+    <div class="grid md:grid-cols-3 gap-8">
+      {cards.map((card) => (
+        <div class="group relative pl-6 border-l-2 border-brand-teal/20 hover:border-brand-teal transition-colors duration-300">
+          <h3 class="text-xl font-heading font-bold text-brand-teal mb-3">
+            {card.title}
+          </h3>
+          <p class="text-brand-charcoal/70 leading-relaxed mb-4 text-sm">
+            {card.body}
+          </p>
+          <p class="text-xs font-semibold text-brand-grey uppercase tracking-[0.1em] italic">
+            {card.accent}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

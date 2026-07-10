@@ -1,0 +1,86 @@
+---
+import { NAV } from "@/utils/constants";
+import Button from "@/components/ui/Button.astro";
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-brand-teal/95 backdrop-blur-sm border-b border-white/10">
+  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
+    <!-- Brand Wordmark -->
+    <a
+      href="/"
+      class="flex flex-col leading-tight group"
+      aria-label="Cosmic Calibrations — Home"
+    >
+      <span class="text-lg font-heading font-bold text-white tracking-tight">
+        Cosmic Calibrations
+      </span>
+      <span class="text-[10px] text-brand-grey/80 uppercase tracking-[0.15em] font-semibold group-hover:text-brand-grey transition-colors">
+        Structural Integration
+      </span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <div class="hidden md:flex items-center gap-8">
+      {NAV.main.map((link) => (
+        <a
+          href={link.href}
+          class="text-sm text-white/70 hover:text-white transition-colors font-medium"
+        >
+          {link.label}
+        </a>
+      ))}
+
+      <Button href={NAV.cta.href} variant="primary-light" size="sm">
+        {NAV.cta.label}
+      </Button>
+    </div>
+
+    <!-- Mobile Hamburger -->
+    <button
+      id="mobile-menu-toggle"
+      class="md:hidden flex flex-col gap-1.5 p-2 -mr-2 group"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+    >
+      <span class="block w-6 h-0.5 bg-white rounded-full transition-all group-hover:bg-brand-grey" />
+      <span class="block w-5 h-0.5 bg-white rounded-full transition-all group-hover:w-6 group-hover:bg-brand-grey" />
+      <span class="block w-4 h-0.5 bg-white rounded-full transition-all group-hover:w-6 group-hover:bg-brand-grey" />
+    </button>
+  </nav>
+
+  <!-- Mobile Menu (hidden by default, toggled via JS) -->
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden bg-brand-teal border-t border-white/10 px-6 py-6 space-y-4"
+  >
+    {NAV.main.map((link) => (
+      <a
+        href={link.href}
+        class="block text-white/70 hover:text-white transition-colors font-medium text-lg py-2"
+      >
+        {link.label}
+      </a>
+    ))}
+    <Button href={NAV.cta.href} variant="primary-light" size="sm" class="w-full justify-center mt-4">
+      {NAV.cta.label}
+    </Button>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById("mobile-menu-toggle");
+  const menu = document.getElementById("mobile-menu");
+
+  toggle?.addEventListener("click", () => {
+    const isOpen = menu?.classList.toggle("hidden");
+    toggle.setAttribute("aria-expanded", String(!isOpen));
+  });
+
+  // Close mobile menu on link click
+  menu?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      menu.classList.add("hidden");
+      toggle?.setAttribute("aria-expanded", "false");
+    });
+  });
+</script>

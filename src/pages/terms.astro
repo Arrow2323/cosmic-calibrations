@@ -1,0 +1,37 @@
+---
+import Layout from "@/components/base/Layout.astro";
+import { BUSINESS } from "@/utils/constants";
+---
+
+<Layout seo={{ title: "Terms of Service", noindex: true }}>
+  <section class="pt-28 pb-24 px-6 bg-white">
+    <div class="max-w-3xl mx-auto prose-cosmic">
+      <p class="section-label mb-4">Legal</p>
+      <h1 class="text-4xl font-heading font-bold text-brand-teal mb-8">Terms of Service</h1>
+      <p class="text-sm text-brand-grey mb-8">Last updated: July 2026</p>
+
+      <h2 class="text-xl font-heading font-bold text-brand-teal mt-8 mb-4">1. Services</h2>
+      <p>{BUSINESS.name} (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) provides Structural Integration bodywork services. Our services are educational and therapeutic in nature, focused on fascial release, postural reorganization, and movement re-education.</p>
+
+      <h2 class="text-xl font-heading font-bold text-brand-teal mt-8 mb-4">2. Not Medical Care</h2>
+      <p>Structural Integration is not a substitute for medical diagnosis or treatment. While our work can complement medical care, we do not diagnose conditions, prescribe medications, or provide medical treatment. Always consult your physician regarding any health concerns.</p>
+
+      <h2 class="text-xl font-heading font-bold text-brand-teal mt-8 mb-4">3. Appointments & Cancellations</h2>
+      <p>We require at least 24 hours notice for appointment cancellations or rescheduling. Late cancellations or no-shows may be subject to a fee. Package sessions are non-refundable but never expire.</p>
+
+      <h2 class="text-xl font-heading font-bold text-brand-teal mt-8 mb-4">4. Payment</h2>
+      <p>Payment is due at the time of service unless otherwise arranged. We accept cash and major credit cards. Package purchases must be paid in full at the first session unless a payment plan has been agreed upon in advance.</p>
+
+      <h2 class="text-xl font-heading font-bold text-brand-teal mt-8 mb-4">5. Limitation of Liability</h2>
+      <p>To the fullest extent permitted by law, {BUSINESS.name} shall not be liable for any indirect, incidental, or consequential damages arising from the use of our services or this website.</p>
+
+      <h2 class="text-xl font-heading font-bold text-brand-teal mt-8 mb-4">6. Contact</h2>
+      <p>For questions about these terms, contact:</p>
+      <p class="mt-2">
+        {BUSINESS.name}<br />
+        {BUSINESS.location}<br />
+        <a href={`mailto:${BUSINESS.email}`} class="text-brand-teal hover:underline">{BUSINESS.email}</a>
+      </p>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,44 @@
+---
+export interface Props {
+  alt: string;
+  aspectRatio?: string;
+  class?: string;
+}
+
+const { alt, aspectRatio = "4/5", class: extraClass = "" } = Astro.props;
+---
+
+<!--
+  Photo frame placeholder — replace with real <Image> when Rhonda provides photos.
+  Currently renders a tasteful grey-toned frame with subtle teal accent.
+-->
+<div
+  class={`relative overflow-hidden rounded-[24px] bg-brand-grey/15 border border-brand-teal/10 ${extraClass}`}
+  style={`aspect-ratio: ${aspectRatio}`}
+  role="img"
+  aria-label={alt}
+>
+  <!-- Subtle geometric pattern (not AI blobs — a delicate cross-hatch) -->
+  <div class="absolute inset-0 flex items-center justify-center">
+    <div class="text-center px-6">
+      <!-- Camera/portrait icon — simple lines, not a lucide icon -->
+      <svg
+        class="mx-auto mb-3 text-brand-grey/30"
+        width="40"
+        height="40"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.2"
+        stroke-linecap="round"
+      >
+        <rect x="2" y="6" width="20" height="15" rx="2" />
+        <circle cx="12" cy="13" r="3" />
+        <line x1="8" y1="4" x2="16" y2="4" />
+      </svg>
+      <p class="text-brand-grey/40 text-sm italic font-heading">
+        {alt}
+      </p>
+    </div>
+  </div>
+</div>

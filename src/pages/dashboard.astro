@@ -22,9 +22,9 @@ import Layout from "@/components/base/Layout.astro";
   </section>
 
   <!-- Dashboard (hidden until auth) -->
-  <div id="app" class="hidden min-h-screen bg-brand-paper flex">
+  <div id="app" class="hidden h-screen overflow-hidden bg-brand-paper flex">
     <!-- Sidebar -->
-    <aside class="w-56 bg-brand-teal text-white flex flex-col shrink-0 h-screen sticky top-0 overflow-y-auto">
+    <aside class="w-56 bg-brand-teal text-white flex flex-col shrink-0 overflow-y-auto">
       <div class="p-5 border-b border-white/10">
         <p class="font-heading font-bold text-sm">Cosmic Calibrations</p>
         <p class="text-[10px] text-brand-grey/70 uppercase tracking-widest mt-0.5">Practitioner Portal</p>
@@ -54,7 +54,7 @@ import Layout from "@/components/base/Layout.astro";
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1 p-6 md:p-10 max-w-5xl">
+    <main class="flex-1 p-6 md:p-10 max-w-5xl overflow-y-auto">
       <!-- Overview Panel -->
       <div id="panel-overview" class="tab-panel space-y-6">
         <div>

@@ -1,0 +1,560 @@
+---
+import Layout from "@/components/base/Layout.astro";
+---
+
+<Layout seo={{ title: "Practitioner Portal", noindex: true }}>
+  <!-- Password Gate -->
+  <section id="auth-gate" class="min-h-screen flex items-center justify-center bg-brand-teal px-6">
+    <div class="max-w-sm w-full text-center">
+      <div class="mb-8">
+        <div class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-brand-grey" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+        <h1 class="text-2xl font-heading font-bold text-white mb-2">Practitioner Portal</h1>
+        <p class="text-sm text-white/50">Cosmic Calibrations — Practice Management</p>
+      </div>
+      <input type="password" id="auth-password" placeholder="Enter access key"
+        class="w-full rounded-xl bg-white/10 border border-white/20 px-5 py-3.5 text-white placeholder-white/30 text-center text-lg tracking-widest focus:outline-none focus:border-brand-grey transition-colors" autocomplete="off" />
+      <p id="auth-error" class="text-red-300 text-xs mt-3 hidden">Incorrect key</p>
+    </div>
+  </section>
+
+  <!-- Dashboard (hidden until auth) -->
+  <div id="app" class="hidden min-h-screen bg-brand-paper flex">
+    <!-- Sidebar -->
+    <aside class="w-56 bg-brand-teal text-white flex flex-col shrink-0 min-h-screen sticky top-0">
+      <div class="p-5 border-b border-white/10">
+        <p class="font-heading font-bold text-sm">Cosmic Calibrations</p>
+        <p class="text-[10px] text-brand-grey/70 uppercase tracking-widest mt-0.5">Practitioner Portal</p>
+      </div>
+      <nav class="flex-1 p-3 space-y-1" id="sidebar-nav">
+        {[
+          { id: "overview", label: "Overview", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
+          { id: "si-predict", label: "SI Predictions", icon: "M12 6v6l4 2M22 12A10 10 0 1112 2a10 10 0 0110 10z" },
+          { id: "calendar", label: "Calendar", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
+          { id: "soap", label: "SOAP Notes", icon: "M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" },
+          { id: "clients", label: "Client Files", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" },
+          { id: "financial", label: "Financial", icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
+        ].map(tab => `
+          <button class="nav-btn w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium transition-all flex items-center gap-3 ${tab.id === 'overview' ? 'bg-white/15 text-white' : 'text-white/60 hover:text-white hover:bg-white/10'}" data-tab="${tab.id}">
+            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="${tab.icon}"/></svg>
+            ${tab.label}
+          </button>
+        `).join("")}
+      </nav>
+      <div class="p-3 border-t border-white/10">
+        <button id="logout-btn" class="w-full text-left px-3 py-2 rounded-xl text-xs text-white/40 hover:text-white hover:bg-white/10 transition-all flex items-center gap-2">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6 md:p-10 max-w-5xl">
+      <!-- Overview Panel -->
+      <div id="panel-overview" class="tab-panel space-y-6">
+        <div>
+          <p class="section-label mb-2">Dashboard</p>
+          <h1 class="text-3xl font-heading font-bold text-brand-teal">Practice Overview</h1>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            { label: "Active Clients", value: "—", id: "stat-clients" },
+            { label: "Sessions This Month", value: "—", id: "stat-sessions" },
+            { label: "Revenue MTD", value: "—", id: "stat-revenue" },
+            { label: "Next Session", value: "—", id: "stat-next" },
+          ].map(s => `
+            <div class="bg-white rounded-[20px] border border-brand-teal/10 p-6">
+              <p class="text-xs text-brand-grey uppercase tracking-[0.1em] mb-2">${s.label}</p>
+              <p class="text-2xl font-heading font-bold text-brand-teal" id="${s.id}">${s.value}</p>
+            </div>
+          `).join("")}
+        </div>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-[20px] border border-brand-teal/10 p-6">
+            <h3 class="font-heading font-bold text-brand-teal mb-4">Quick Actions</h3>
+            <div class="space-y-2">
+              {[
+                { label: "Compute SI Predictions", tab: "si-predict" },
+                { label: "Write SOAP Note", tab: "soap" },
+                { label: "View Calendar", tab: "calendar" },
+                { label: "Add Client", tab: "clients" },
+              ].map(a => `
+                <button class="quick-action w-full text-left px-4 py-3 rounded-xl bg-brand-paper hover:bg-brand-teal/5 text-sm text-brand-charcoal/70 hover:text-brand-teal transition-all font-medium" data-tab="${a.tab}">${a.label} →</button>
+              `).join("")}
+            </div>
+          </div>
+          <div class="bg-white rounded-[20px] border border-brand-teal/10 p-6">
+            <h3 class="font-heading font-bold text-brand-teal mb-4">Recent Activity</h3>
+            <div id="recent-activity" class="text-sm text-brand-charcoal/50">
+              <p>No recent activity</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SI Predictions Panel -->
+      <div id="panel-si-predict" class="tab-panel hidden space-y-6">
+        <div>
+          <p class="section-label mb-2">Stars Engine</p>
+          <h1 class="text-3xl font-heading font-bold text-brand-teal">SI Predictions</h1>
+          <p class="text-sm text-brand-charcoal/60 mt-2">Enter client birth data to generate session-by-session structural integration predictions.</p>
+        </div>
+        <form id="si-form" class="bg-white rounded-[20px] border border-brand-teal/10 p-6 shadow-sm">
+          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-[0.12em] text-brand-grey mb-2">Client Name</label>
+              <input type="text" id="si-name" placeholder="Jane Smith" class="w-full rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal transition-colors" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-[0.12em] text-brand-grey mb-2">Birth Date *</label>
+              <input type="date" id="si-date" required class="w-full rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal transition-colors" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-[0.12em] text-brand-grey mb-2">Birth Time</label>
+              <input type="time" id="si-time" class="w-full rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal transition-colors" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-[0.12em] text-brand-grey mb-2">Birth Location</label>
+              <input type="text" id="si-location" placeholder="Austin, TX" class="w-full rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal transition-colors" />
+            </div>
+          </div>
+          <button type="submit" id="si-submit" class="mt-4 rounded-full bg-brand-teal text-white font-semibold px-8 py-3 text-sm hover:bg-brand-teal-light shadow-sm transition-all disabled:opacity-50">
+            <span id="si-submit-text">Compute SI Predictions</span>
+            <span id="si-submit-spinner" class="hidden">Computing…</span>
+          </button>
+          <p id="si-error" class="text-red-500 text-xs mt-3 hidden"></p>
+        </form>
+        <div id="si-results" class="hidden space-y-4"></div>
+      </div>
+
+      <!-- Calendar Panel -->
+      <div id="panel-calendar" class="tab-panel hidden space-y-6">
+        <div>
+          <p class="section-label mb-2">Schedule</p>
+          <h1 class="text-3xl font-heading font-bold text-brand-teal">Calendar</h1>
+          <p class="text-sm text-brand-charcoal/60 mt-2">Connect your Google Calendar to view and manage appointments.</p>
+        </div>
+        <div class="bg-white rounded-[20px] border border-brand-teal/10 p-6 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-heading font-bold text-brand-teal">Upcoming Appointments</h3>
+            <button id="cal-add-btn" class="text-xs font-semibold text-brand-teal hover:underline">+ Add Appointment</button>
+          </div>
+          <div id="calendar-list" class="space-y-2">
+            <p class="text-sm text-brand-charcoal/40">No upcoming appointments. Add one to get started.</p>
+          </div>
+          <!-- Add Appointment Form (hidden) -->
+          <form id="cal-form" class="hidden mt-4 p-4 bg-brand-paper rounded-xl space-y-3">
+            <div class="grid sm:grid-cols-3 gap-3">
+              <input type="text" id="cal-client" placeholder="Client name" class="rounded-xl border border-brand-teal/15 px-3 py-2 text-sm focus:outline-none focus:border-brand-teal" />
+              <input type="date" id="cal-date" class="rounded-xl border border-brand-teal/15 px-3 py-2 text-sm focus:outline-none focus:border-brand-teal" />
+              <input type="time" id="cal-time" class="rounded-xl border border-brand-teal/15 px-3 py-2 text-sm focus:outline-none focus:border-brand-teal" />
+            </div>
+            <div class="flex gap-2">
+              <button type="submit" class="rounded-full bg-brand-teal text-white text-xs font-semibold px-4 py-2 hover:bg-brand-teal-light transition-all">Save</button>
+              <button type="button" id="cal-cancel" class="rounded-full text-xs font-semibold px-4 py-2 text-brand-grey hover:text-brand-charcoal transition-all">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- SOAP Notes Panel -->
+      <div id="panel-soap" class="tab-panel hidden space-y-6">
+        <div>
+          <p class="section-label mb-2">Clinical</p>
+          <h1 class="text-3xl font-heading font-bold text-brand-teal">SOAP Notes</h1>
+        </div>
+        <form id="soap-form" class="bg-white rounded-[20px] border border-brand-teal/10 p-6 shadow-sm space-y-4">
+          <div class="grid sm:grid-cols-3 gap-4">
+            <input type="text" id="soap-client" placeholder="Client name" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
+            <input type="date" id="soap-date" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
+            <input type="number" id="soap-session" placeholder="Session #" min="1" max="10" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
+          </div>
+          {[
+            { id: "soap-subjective", label: "Subjective", placeholder: "Client's reported experience, concerns, changes noticed since last session..." },
+            { id: "soap-objective", label: "Objective", placeholder: "Postural assessment, palpation findings, range of motion, fascial restrictions observed..." },
+            { id: "soap-assessment", label: "Assessment", placeholder: "Structural patterns identified, progress in the series, areas of focus..." },
+            { id: "soap-plan", label: "Plan", placeholder: "Next session focus, homework/movement cues, follow-up notes..." },
+          ].map(f => `
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-[0.12em] text-brand-grey mb-2">${f.label}</label>
+              <textarea id="${f.id}" rows="3" placeholder="${f.placeholder}" class="w-full rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal transition-colors resize-y"></textarea>
+            </div>
+          `).join("")}
+          <div class="flex gap-3">
+            <button type="submit" class="rounded-full bg-brand-teal text-white font-semibold px-6 py-3 text-sm hover:bg-brand-teal-light shadow-sm transition-all">Save SOAP Note</button>
+            <button type="button" id="soap-export" class="rounded-full border border-brand-teal/20 text-brand-teal font-semibold px-6 py-3 text-sm hover:bg-brand-teal/5 transition-all">Export All Notes</button>
+          </div>
+        </form>
+        <div id="soap-list" class="space-y-3"></div>
+      </div>
+
+      <!-- Clients Panel -->
+      <div id="panel-clients" class="tab-panel hidden space-y-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="section-label mb-2">Records</p>
+            <h1 class="text-3xl font-heading font-bold text-brand-teal">Client Files</h1>
+          </div>
+          <button id="client-add-btn" class="rounded-full bg-brand-teal text-white font-semibold px-5 py-2.5 text-sm hover:bg-brand-teal-light transition-all">+ Add Client</button>
+        </div>
+        <form id="client-form" class="hidden bg-white rounded-[20px] border border-brand-teal/10 p-6 shadow-sm space-y-4">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <input type="text" id="client-name" placeholder="Full name" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
+            <input type="email" id="client-email" placeholder="Email" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
+            <input type="tel" id="client-phone" placeholder="Phone" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
+            <input type="date" id="client-dob" placeholder="Date of birth" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
+            <textarea id="client-notes" rows="2" placeholder="Notes, concerns, referral source..." class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal sm:col-span-2 resize-y"></textarea>
+          </div>
+          <div class="flex gap-3">
+            <button type="submit" class="rounded-full bg-brand-teal text-white font-semibold px-5 py-2.5 text-sm hover:bg-brand-teal-light transition-all">Save Client</button>
+            <button type="button" id="client-cancel" class="text-sm text-brand-grey hover:text-brand-charcoal transition-all font-medium">Cancel</button>
+          </div>
+        </form>
+        <div id="client-list" class="grid sm:grid-cols-2 gap-4"></div>
+      </div>
+
+      <!-- Financial Panel -->
+      <div id="panel-financial" class="tab-panel hidden space-y-6">
+        <div>
+          <p class="section-label mb-2">Business</p>
+          <h1 class="text-3xl font-heading font-bold text-brand-teal">Financial</h1>
+        </div>
+        <div class="grid sm:grid-cols-3 gap-4">
+          {[
+            { label: "Revenue MTD", id: "fin-revenue-mtd", value: "$0" },
+            { label: "Revenue YTD", id: "fin-revenue-ytd", value: "$0" },
+            { label: "Outstanding", id: "fin-outstanding", value: "$0" },
+          ].map(f => `
+            <div class="bg-white rounded-[20px] border border-brand-teal/10 p-6">
+              <p class="text-xs text-brand-grey uppercase tracking-[0.1em] mb-2">${f.label}</p>
+              <p class="text-2xl font-heading font-bold text-brand-teal" id="${f.id}">${f.value}</p>
+            </div>
+          `).join("")}
+        </div>
+        <div class="bg-white rounded-[20px] border border-brand-teal/10 p-6 shadow-sm">
+          <h3 class="font-heading font-bold text-brand-teal mb-4">Add Transaction</h3>
+          <form id="fin-form" class="grid sm:grid-cols-4 gap-3 items-end">
+            <input type="text" id="fin-desc" placeholder="Description" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
+            <input type="number" id="fin-amount" placeholder="Amount ($)" step="0.01" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal" />
+            <select id="fin-type" class="rounded-xl border border-brand-teal/15 px-4 py-3 text-sm focus:outline-none focus:border-brand-teal">
+              <option value="income">Income</option><option value="expense">Expense</option>
+            </select>
+            <button type="submit" class="rounded-full bg-brand-teal text-white font-semibold px-5 py-3 text-sm hover:bg-brand-teal-light transition-all">Add</button>
+          </form>
+          <div id="fin-list" class="mt-6 space-y-2"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</Layout>
+
+<script>
+  const ACCESS_KEY = "cosmic-stars-2026";
+
+  // ── Auth ──
+  const authGate = document.getElementById("auth-gate")!;
+  const app = document.getElementById("app")!;
+  const authInput = document.getElementById("auth-password") as HTMLInputElement;
+  const authError = document.getElementById("auth-error")!;
+
+  if (localStorage.getItem("portal-auth") === ACCESS_KEY) {
+    authGate.classList.add("hidden");
+    app.classList.remove("hidden");
+  }
+  authInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      if (authInput.value === ACCESS_KEY) {
+        localStorage.setItem("portal-auth", ACCESS_KEY);
+        authGate.classList.add("hidden");
+        app.classList.remove("hidden");
+        authError.classList.add("hidden");
+        refreshOverview();
+      } else {
+        authError.classList.remove("hidden");
+        authInput.value = "";
+      }
+    }
+  });
+  document.getElementById("logout-btn")?.addEventListener("click", () => {
+    localStorage.removeItem("portal-auth");
+    location.reload();
+  });
+
+  // ── Tab Navigation ──
+  document.querySelectorAll(".nav-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const tabId = (btn as HTMLElement).dataset.tab!;
+      switchTab(tabId);
+    });
+  });
+  document.querySelectorAll(".quick-action").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const tabId = (btn as HTMLElement).dataset.tab!;
+      switchTab(tabId);
+    });
+  });
+
+  function switchTab(tabId: string) {
+    document.querySelectorAll(".nav-btn").forEach(b => {
+      const isActive = (b as HTMLElement).dataset.tab === tabId;
+      b.classList.toggle("bg-white/15", isActive);
+      b.classList.toggle("text-white", isActive);
+      b.classList.toggle("text-white/60", !isActive);
+      b.classList.toggle("hover:text-white", !isActive);
+      b.classList.toggle("hover:bg-white/10", !isActive);
+    });
+    document.querySelectorAll(".tab-panel").forEach(p => {
+      p.classList.toggle("hidden", p.id !== `panel-${tabId}`);
+    });
+    if (tabId === "overview") refreshOverview();
+    if (tabId === "clients") renderClients();
+    if (tabId === "soap") renderSOAPNotes();
+    if (tabId === "calendar") renderCalendar();
+    if (tabId === "financial") renderFinancial();
+  }
+
+  // ── Storage Helpers ──
+  function load(key: string): any[] {
+    try { return JSON.parse(localStorage.getItem(`portal-${key}`) || "[]"); } catch { return []; }
+  }
+  function save(key: string, data: any[]) {
+    localStorage.setItem(`portal-${key}`, JSON.stringify(data));
+  }
+
+  // ── Overview ──
+  function refreshOverview() {
+    const clients = load("clients");
+    const soap = load("soap");
+    const cal = load("calendar");
+    const fin = load("financial");
+    const now = new Date();
+    const thisMonth = fin.filter((t: any) => new Date(t.date).getMonth() === now.getMonth() && t.type === "income").reduce((s: number, t: any) => s + t.amount, 0);
+    const ytd = fin.filter((t: any) => new Date(t.date).getFullYear() === now.getFullYear() && t.type === "income").reduce((s: number, t: any) => s + t.amount, 0);
+    const nextApt = cal.filter((a: any) => new Date(a.date + "T" + a.time) > now).sort((a: any, b: any) => new Date(a.date + "T" + a.time).getTime() - new Date(b.date + "T" + b.time).getTime())[0];
+
+    document.getElementById("stat-clients")!.textContent = String(clients.length);
+    document.getElementById("stat-sessions")!.textContent = String(soap.filter((s: any) => new Date(s.date).getMonth() === now.getMonth()).length);
+    document.getElementById("stat-revenue")!.textContent = "$" + thisMonth.toLocaleString();
+    document.getElementById("stat-next")!.textContent = nextApt ? `${nextApt.client} — ${nextApt.date}` : "None";
+
+    const recent = [
+      ...soap.slice(-3).map((s: any) => ({ type: "SOAP", text: `${s.client} — Session ${s.session} (${s.date})`, date: s.date })),
+      ...cal.filter((a: any) => new Date(a.date + "T" + a.time) > now).slice(0, 3).map((a: any) => ({ type: "Appt", text: `${a.client} — ${a.date} ${a.time}`, date: a.date })),
+    ].sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 5);
+
+    const activityEl = document.getElementById("recent-activity")!;
+    activityEl.innerHTML = recent.length ? recent.map(r => `<p class="mb-1"><span class="text-brand-teal font-semibold text-xs">${r.type}</span> ${r.text}</p>`).join("") : "<p class='text-sm text-brand-charcoal/50'>No recent activity</p>";
+  }
+
+  // ── SI Predictions ──
+  document.getElementById("si-form")!.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = (document.getElementById("si-name") as HTMLInputElement).value || "Client";
+    const date = (document.getElementById("si-date") as HTMLInputElement).value;
+    const time = (document.getElementById("si-time") as HTMLInputElement).value;
+    const location = (document.getElementById("si-location") as HTMLInputElement).value;
+    const errEl = document.getElementById("si-error")!;
+    const submitBtn = document.getElementById("si-submit") as HTMLButtonElement;
+    const submitText = document.getElementById("si-submit-text")!;
+    const submitSpinner = document.getElementById("si-submit-spinner")!;
+    if (!date) { errEl.textContent = "Birth date required"; errEl.classList.remove("hidden"); return; }
+    errEl.classList.add("hidden");
+    submitBtn.disabled = true;
+    submitText.classList.add("hidden");
+    submitSpinner.classList.remove("hidden");
+
+    try {
+      const resp = await fetch("https://cosmiccalibrations.madmanwithabox.org/api/stars/si-predict", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, birth_date: date, birth_time: time || undefined, birth_location: location || "Austin, TX" }),
+      });
+      const data = await resp.json();
+      if (data.error) { errEl.textContent = data.error; errEl.classList.remove("hidden"); return; }
+      renderSIResults(data);
+    } catch { errEl.textContent = "Network error"; errEl.classList.remove("hidden"); }
+    finally { submitBtn.disabled = false; submitText.classList.remove("hidden"); submitSpinner.classList.add("hidden"); }
+  });
+
+  function renderSIResults(data: any) {
+    const si = data.structural_integration;
+    const el = document.getElementById("si-results")!;
+    el.classList.remove("hidden");
+    el.innerHTML = `
+      <div class="bg-white rounded-[20px] border border-brand-teal/10 p-6 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h3 class="font-heading font-bold text-brand-teal text-lg">${data.name}</h3>
+            <p class="text-xs text-brand-grey">${data.chart_summary.sun_sign} Sun · ${data.chart_summary.moon_sign} Moon · ${data.chart_summary.hd_type} ${data.chart_summary.hd_profile}</p>
+            ${data.warning ? `<p class="text-xs text-amber-600 mt-1">${data.warning}</p>` : ""}
+          </div>
+          <button onclick="window.print()" class="text-xs text-brand-grey hover:text-brand-teal font-medium">Print</button>
+        </div>
+        <p class="text-sm text-brand-charcoal/70 mb-4">${si.client_summary}</p>
+        ${si.contraindications?.length ? `<div class="p-3 rounded-xl bg-red-50 border border-red-200 mb-4"><p class="text-xs font-bold text-red-700 mb-1">Contraindications</p>${si.contraindications.map((c: string) => `<p class="text-xs text-red-600">${c}</p>`).join("")}</div>` : ""}
+        <div class="space-y-3">
+          ${si.session_plan.map((s: any) => `
+            <details class="group">
+              <summary class="cursor-pointer flex items-center justify-between p-3 rounded-xl bg-brand-paper hover:bg-brand-teal/5 transition-colors">
+                <span class="text-sm font-semibold text-brand-teal">${s.session}. ${s.rolfing_focus}</span>
+                <span class="text-xs text-brand-grey">${s.armor_priority?.length || 0} armor · ${s.gene_keys_somatic_shadows?.length || 0} shadows</span>
+              </summary>
+              <div class="mt-2 p-4 space-y-3 text-sm">
+                <p><strong class="text-brand-teal">Pacing:</strong> ${s.pacing}</p>
+                ${s.armor_priority?.length ? `<div><strong class="text-brand-teal">Armor:</strong> ${s.armor_priority.map((a: any) => `<span class="inline-block text-xs mr-1 mb-1 px-2 py-0.5 rounded-full ${a.status.includes('ARMORED') ? 'bg-amber-100 text-amber-700' : 'bg-green-50 text-green-700'}">${a.segment}: ${a.status}</span>`).join(" ")}</div>` : ""}
+                ${s.emotional_release_potential ? `<p class="text-brand-charcoal/70 leading-relaxed"><strong class="text-brand-teal">Emotional:</strong> ${s.emotional_release_potential}</p>` : ""}
+              </div>
+            </details>
+          `).join("")}
+        </div>
+      </div>`;
+  }
+
+  // ── Calendar ──
+  document.getElementById("cal-add-btn")!.addEventListener("click", () => document.getElementById("cal-form")!.classList.remove("hidden"));
+  document.getElementById("cal-cancel")!.addEventListener("click", () => document.getElementById("cal-form")!.classList.add("hidden"));
+  document.getElementById("cal-form")!.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const cal = load("calendar");
+    cal.push({
+      client: (document.getElementById("cal-client") as HTMLInputElement).value,
+      date: (document.getElementById("cal-date") as HTMLInputElement).value,
+      time: (document.getElementById("cal-time") as HTMLInputElement).value,
+    });
+    cal.sort((a: any, b: any) => new Date(a.date + "T" + a.time).getTime() - new Date(b.date + "T" + b.time).getTime());
+    save("calendar", cal);
+    (document.getElementById("cal-form") as HTMLFormElement).reset();
+    document.getElementById("cal-form")!.classList.add("hidden");
+    renderCalendar();
+  });
+
+  function renderCalendar() {
+    const cal = load("calendar");
+    const now = new Date();
+    const upcoming = cal.filter((a: any) => new Date(a.date + "T" + a.time) > now);
+    const el = document.getElementById("calendar-list")!;
+    el.innerHTML = upcoming.length ? upcoming.map((a: any) => `
+      <div class="flex items-center justify-between p-3 rounded-xl bg-brand-paper">
+        <div><span class="text-sm font-semibold text-brand-charcoal">${a.client}</span><span class="text-xs text-brand-grey ml-2">${a.date} at ${a.time}</span></div>
+        <button class="text-xs text-red-400 hover:text-red-600" onclick="event.stopPropagation();const c=JSON.parse(localStorage.getItem('portal-calendar')||'[]');const i=c.findIndex((x:any)=>x.client==='${a.client}'&&x.date==='${a.date}');if(i>-1){c.splice(i,1);localStorage.setItem('portal-calendar',JSON.stringify(c));renderCalendar();}">Remove</button>
+      </div>`).join("") : "<p class='text-sm text-brand-charcoal/40'>No upcoming appointments.</p>";
+  }
+
+  // ── SOAP Notes ──
+  document.getElementById("soap-form")!.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const soap = load("soap");
+    soap.unshift({
+      client: (document.getElementById("soap-client") as HTMLInputElement).value,
+      date: (document.getElementById("soap-date") as HTMLInputElement).value,
+      session: (document.getElementById("soap-session") as HTMLInputElement).value,
+      subjective: (document.getElementById("soap-subjective") as HTMLTextAreaElement).value,
+      objective: (document.getElementById("soap-objective") as HTMLTextAreaElement).value,
+      assessment: (document.getElementById("soap-assessment") as HTMLTextAreaElement).value,
+      plan: (document.getElementById("soap-plan") as HTMLTextAreaElement).value,
+    });
+    save("soap", soap);
+    (document.getElementById("soap-form") as HTMLFormElement).reset();
+    renderSOAPNotes();
+    refreshOverview();
+  });
+
+  function renderSOAPNotes() {
+    const soap = load("soap");
+    const el = document.getElementById("soap-list")!;
+    el.innerHTML = soap.length ? soap.map((s: any, i: number) => `
+      <details class="bg-white rounded-[20px] border border-brand-teal/10 p-6 shadow-sm">
+        <summary class="cursor-pointer flex items-center justify-between">
+          <div><span class="font-semibold text-brand-teal">${s.client}</span><span class="text-xs text-brand-grey ml-3">Session ${s.session} — ${s.date}</span></div>
+          <button class="text-xs text-red-400 hover:text-red-600" onclick="event.preventDefault();event.stopPropagation();const so=JSON.parse(localStorage.getItem('portal-soap')||'[]');so.splice(${i},1);localStorage.setItem('portal-soap',JSON.stringify(so));renderSOAPNotes();refreshOverview();">Delete</button>
+        </summary>
+        <div class="mt-4 space-y-3 text-sm">
+          ${["Subjective","Objective","Assessment","Plan"].map(f => `<div><p class="text-xs font-bold text-brand-grey uppercase mb-1">${f}</p><p class="text-brand-charcoal/70">${s[f.toLowerCase()] || "—"}</p></div>`).join("")}
+        </div>
+      </details>`).join("") : "<p class='text-sm text-brand-charcoal/40'>No SOAP notes yet.</p>";
+  }
+
+  document.getElementById("soap-export")!.addEventListener("click", () => {
+    const soap = load("soap");
+    const text = soap.map((s: any) => `CLIENT: ${s.client} | Session ${s.session} | ${s.date}\nS: ${s.subjective}\nO: ${s.objective}\nA: ${s.assessment}\nP: ${s.plan}\n---\n`).join("\n");
+    const blob = new Blob([text], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "soap-notes-export.txt"; a.click();
+  });
+
+  // ── Clients ──
+  document.getElementById("client-add-btn")!.addEventListener("click", () => document.getElementById("client-form")!.classList.toggle("hidden"));
+  document.getElementById("client-cancel")!.addEventListener("click", () => document.getElementById("client-form")!.classList.add("hidden"));
+  document.getElementById("client-form")!.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const clients = load("clients");
+    clients.push({
+      name: (document.getElementById("client-name") as HTMLInputElement).value,
+      email: (document.getElementById("client-email") as HTMLInputElement).value,
+      phone: (document.getElementById("client-phone") as HTMLInputElement).value,
+      dob: (document.getElementById("client-dob") as HTMLInputElement).value,
+      notes: (document.getElementById("client-notes") as HTMLTextAreaElement).value,
+      created: new Date().toISOString().split("T")[0],
+    });
+    save("clients", clients);
+    (document.getElementById("client-form") as HTMLFormElement).reset();
+    document.getElementById("client-form")!.classList.add("hidden");
+    renderClients();
+    refreshOverview();
+  });
+
+  function renderClients() {
+    const clients = load("clients");
+    const el = document.getElementById("client-list")!;
+    el.innerHTML = clients.length ? clients.map((c: any, i: number) => `
+      <div class="bg-white rounded-[20px] border border-brand-teal/10 p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-2">
+          <h4 class="font-heading font-bold text-brand-teal">${c.name}</h4>
+          <button class="text-xs text-red-400 hover:text-red-600" onclick="event.stopPropagation();const cl=JSON.parse(localStorage.getItem('portal-clients')||'[]');cl.splice(${i},1);localStorage.setItem('portal-clients',JSON.stringify(cl));renderClients();refreshOverview();">Remove</button>
+        </div>
+        <div class="text-xs text-brand-charcoal/60 space-y-1">
+          ${c.email ? `<p>${c.email}</p>` : ""}${c.phone ? `<p>${c.phone}</p>` : ""}${c.dob ? `<p>DOB: ${c.dob}</p>` : ""}
+          <p class="text-brand-charcoal/40">Added ${c.created}</p>
+          ${c.notes ? `<p class="text-brand-charcoal/50 italic mt-2">${c.notes}</p>` : ""}
+        </div>
+      </div>`).join("") : "<p class='text-sm text-brand-charcoal/40 col-span-2'>No clients added yet.</p>";
+  }
+
+  // ── Financial ──
+  document.getElementById("fin-form")!.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const fin = load("financial");
+    fin.unshift({
+      desc: (document.getElementById("fin-desc") as HTMLInputElement).value,
+      amount: parseFloat((document.getElementById("fin-amount") as HTMLInputElement).value) || 0,
+      type: (document.getElementById("fin-type") as HTMLSelectElement).value,
+      date: new Date().toISOString().split("T")[0],
+    });
+    save("financial", fin);
+    (document.getElementById("fin-form") as HTMLFormElement).reset();
+    renderFinancial();
+    refreshOverview();
+  });
+
+  function renderFinancial() {
+    const fin = load("financial");
+    const now = new Date();
+    const mtd = fin.filter((t: any) => new Date(t.date).getMonth() === now.getMonth() && t.type === "income").reduce((s: number, t: any) => s + t.amount, 0);
+    const ytd = fin.filter((t: any) => new Date(t.date).getFullYear() === now.getFullYear() && t.type === "income").reduce((s: number, t: any) => s + t.amount, 0);
+    const outstanding = fin.filter((t: any) => t.type === "income").reduce((s: number, t: any) => s + t.amount, 0) - fin.filter((t: any) => t.type === "expense").reduce((s: number, t: any) => s + t.amount, 0);
+    document.getElementById("fin-revenue-mtd")!.textContent = "$" + mtd.toLocaleString();
+    document.getElementById("fin-revenue-ytd")!.textContent = "$" + ytd.toLocaleString();
+    document.getElementById("fin-outstanding")!.textContent = "$" + outstanding.toLocaleString();
+
+    const el = document.getElementById("fin-list")!;
+    el.innerHTML = fin.length ? fin.slice(0, 20).map((t: any) => `
+      <div class="flex items-center justify-between p-3 rounded-xl bg-brand-paper">
+        <div><span class="text-sm font-semibold text-brand-charcoal">${t.desc}</span><span class="text-xs text-brand-grey ml-2">${t.date}</span></div>
+        <span class="text-sm font-semibold ${t.type === 'income' ? 'text-green-600' : 'text-red-500'}">${t.type === 'income' ? '+' : '-'}$${t.amount}</span>
+      </div>`).join("") : "<p class='text-sm text-brand-charcoal/40'>No transactions yet.</p>";
+  }
+</script>

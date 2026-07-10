@@ -46,6 +46,7 @@ export const NAV = {
     { label: "FAQ", href: "/faq" },
   ],
   cta: { label: "Book a Session", href: "#book" },
+  portal: { label: "Portal", href: "/dashboard" },
 } as const;
 
 export const SOCIAL = {

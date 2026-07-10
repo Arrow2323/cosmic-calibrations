@@ -599,20 +599,17 @@ import Layout from "@/components/base/Layout.astro";
     const invoices = load("invoices").filter((inv: any) => inv.client === clientName);
     const si = client.siGuide;
 
-    // Hide all tab panels, show client page
-    document.querySelectorAll(".tab-panel").forEach(p => p.classList.add("hidden"));
+    // Replace main content with client page
     document.querySelectorAll(".nav-btn").forEach(b => { b.classList.remove("bg-white/15","text-white"); b.classList.add("text-white/60","hover:text-white","hover:bg-white/10"); });
 
     const main = document.querySelector("main")!;
-    const existing = document.getElementById("client-page");
-    if (existing) existing.remove();
+    main.innerHTML = "";
 
     const page = document.createElement("div");
-    page.id = "client-page";
     page.className = "space-y-6";
     page.innerHTML = `
       <div class="flex items-center gap-4 mb-2">
-        <button onclick="window.location.hash='';document.getElementById('client-page')?.remove();switchTab('overview');" class="text-sm text-brand-grey hover:text-brand-teal transition-colors font-medium flex items-center gap-1">
+        <button onclick="goBackToDashboard()" class="text-sm text-brand-grey hover:text-brand-teal transition-colors font-medium flex items-center gap-1">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
           Back to Dashboard
         </button>
@@ -642,7 +639,7 @@ import Layout from "@/components/base/Layout.astro";
         <div class="bg-white rounded-[20px] border border-brand-teal/10 p-5">
           <h4 class="font-heading font-bold text-brand-teal text-sm mb-3">Notes</h4>
           <p class="text-sm text-brand-charcoal/70">${client.notes || "No notes"}</p>
-          <button class="mt-3 text-xs text-red-400 hover:text-red-600 font-medium" onclick="if(confirm('Delete client ${client.name.replace(/'/g, "\\'")}?')){const cl=JSON.parse(localStorage.getItem('portal-clients')||'[]');const i=cl.findIndex((c:any)=>c.name==='${client.name.replace(/'/g, "\\'")}');if(i>-1){cl.splice(i,1);localStorage.setItem('portal-clients',JSON.stringify(cl));}window.location.hash='';document.getElementById('client-page')?.remove();switchTab('overview');refreshOverview();}">Delete Client</button>
+          <button class="mt-3 text-xs text-red-400 hover:text-red-600 font-medium" onclick="if(confirm('Delete client ${client.name.replace(/'/g, "\\'")}?')){const cl=JSON.parse(localStorage.getItem('portal-clients')||'[]');const i=cl.findIndex((c:any)=>c.name==='${client.name.replace(/'/g, "\\'")}');if(i>-1){cl.splice(i,1);localStorage.setItem('portal-clients',JSON.stringify(cl));}window.location.hash='';window.goBackToDashboard();refreshOverview();}">Delete Client</button>
         </div>
       </div>
 
@@ -699,6 +696,30 @@ import Layout from "@/components/base/Layout.astro";
 
     main.appendChild(page);
   }
+
+  // Save original panels HTML for back navigation
+  const mainEl = document.querySelector("main")!;
+  const originalPanels = mainEl.innerHTML;
+
+  window.goBackToDashboard = function() {
+    window.location.hash = "";
+    mainEl.innerHTML = originalPanels;
+    // Re-bind tab switching after restoring HTML
+    document.querySelectorAll(".nav-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const tabId = (btn as HTMLElement).dataset.tab!;
+        switchTab(tabId);
+      });
+    });
+    document.querySelectorAll(".quick-action").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const tabId = (btn as HTMLElement).dataset.tab!;
+        switchTab(tabId);
+      });
+    });
+    switchTab("overview");
+    refreshOverview();
+  };
 
   // Handle hash-based client navigation
   window.addEventListener("hashchange", () => {

@@ -1,6 +1,7 @@
 ---
 import Layout from "@/components/base/Layout.astro";
 import Accordion from "@/components/ui/Accordion.astro";
+import CalendlyPopup from "@/components/ui/CalendlyPopup.astro";
 import faqData from "@/data/faq.json";
 ---
 
@@ -28,16 +29,19 @@ import faqData from "@/data/faq.json";
 
       <!-- Still have questions? -->
       <div class="mt-16 pt-8 border-t border-brand-teal/10 text-center">
-        <p class="text-brand-charcoal/60 mb-4">Still have questions?</p>
-        <a
-          href="/contact"
-          class="inline-flex items-center gap-2 text-brand-teal font-semibold hover:underline underline-offset-4"
-        >
-          Get in touch
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-          </svg>
-        </a>
+        <p class="text-brand-charcoal/60 mb-4">Still have questions? Let's talk.</p>
+        <div class="flex items-center justify-center gap-4">
+          <CalendlyPopup label="Book a Free Consult" variant="primary" />
+          <a
+            href="/contact"
+            class="inline-flex items-center gap-2 text-brand-teal font-semibold hover:underline underline-offset-4"
+          >
+            Send a message
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
   </section>

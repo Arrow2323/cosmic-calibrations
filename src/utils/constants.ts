@@ -19,6 +19,17 @@ export const PRICING = {
   savings: 150,
 } as const;
 
+export const CALENDLY = {
+  /** Rhonda's Calendly username. Create a free account at calendly.com
+   *  and set up a "Structural Integration Consult" event type.
+   *  Calendly syncs 2-way with Google Calendar automatically. */
+  username: "rhonda-roberts-bcsi",
+  /** The event type slug for booking a consultation */
+  eventType: "free-consult",
+  /** Color override for the Calendly widget (matches brand teal) */
+  primaryColor: "005F73",
+} as const;
+
 export const NAV = {
   main: [
     { label: "The 10-Series", href: "/#ten-series" },
@@ -26,7 +37,7 @@ export const NAV = {
     { label: "What to Expect", href: "/what-to-expect" },
     { label: "FAQ", href: "/faq" },
   ],
-  cta: { label: "Book a Consult", href: "/#contact" },
+  cta: { label: "Book a Session", href: "#book" },
 } as const;
 
 export const SOCIAL = {

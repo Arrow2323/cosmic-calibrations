@@ -1,5 +1,6 @@
 ---
 import Layout from "@/components/base/Layout.astro";
+import CalendlyPopup from "@/components/ui/CalendlyPopup.astro";
 
 const steps = [
   {
@@ -109,15 +110,7 @@ const steps = [
     <div class="max-w-2xl mx-auto">
       <h2 class="text-3xl font-heading font-bold text-white mb-4">Ready to begin?</h2>
       <p class="text-white/70 mb-8">Start with a free 15-minute phone consultation.</p>
-      <a
-        href="/#contact"
-        class="inline-flex items-center gap-2 rounded-full bg-white text-brand-teal font-semibold px-8 py-4 text-base hover:bg-white/90 shadow-sm transition-all"
-      >
-        Book Free Consult
-        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-          <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-        </svg>
-      </a>
+      <CalendlyPopup label="Book Free Consult" variant="primary-light" class="!px-8 !py-4 !text-base" />
     </div>
   </section>
 </Layout>

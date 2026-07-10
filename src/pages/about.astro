@@ -1,6 +1,7 @@
 ---
 import Layout from "@/components/base/Layout.astro";
 import PhotoFrame from "@/components/ui/PhotoFrame.astro";
+import CalendlyPopup from "@/components/ui/CalendlyPopup.astro";
 import { BUSINESS } from "@/utils/constants";
 ---
 
@@ -99,15 +100,7 @@ import { BUSINESS } from "@/utils/constants";
 
           <!-- CTA -->
           <div class="mt-12 pt-8 border-t border-brand-teal/10">
-            <a
-              href="/#contact"
-              class="inline-flex items-center gap-2 rounded-full bg-brand-teal text-white font-semibold px-8 py-4 text-base hover:bg-brand-teal-light shadow-sm hover:shadow-md transition-all"
-            >
-              Book a Free 15-Min Consult
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-              </svg>
-            </a>
+            <CalendlyPopup label="Book a Free 15-Min Consult" variant="primary" class="!px-8 !py-4 !text-base" />
           </div>
         </div>
       </div>

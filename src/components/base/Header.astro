@@ -1,6 +1,6 @@
 ---
 import { NAV } from "@/utils/constants";
-import Button from "@/components/ui/Button.astro";
+import CalendlyPopup from "@/components/ui/CalendlyPopup.astro";
 ---
 
 <header class="fixed top-0 left-0 right-0 z-50 bg-brand-teal/95 backdrop-blur-sm border-b border-white/10">
@@ -30,9 +30,7 @@ import Button from "@/components/ui/Button.astro";
         </a>
       ))}
 
-      <Button href={NAV.cta.href} variant="primary-light" size="sm">
-        {NAV.cta.label}
-      </Button>
+      <CalendlyPopup label={NAV.cta.label} variant="primary-light" class="!px-5 !py-2 !text-sm" />
     </div>
 
     <!-- Mobile Hamburger -->
@@ -61,9 +59,7 @@ import Button from "@/components/ui/Button.astro";
         {link.label}
       </a>
     ))}
-    <Button href={NAV.cta.href} variant="primary-light" size="sm" class="w-full justify-center mt-4">
-      {NAV.cta.label}
-    </Button>
+    <CalendlyPopup label={NAV.cta.label} variant="primary-light" class="!px-5 !py-2 !text-sm w-full justify-center mt-4" />
   </div>
 </header>
 

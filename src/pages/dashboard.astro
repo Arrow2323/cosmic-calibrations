@@ -590,7 +590,7 @@ import Layout from "@/components/base/Layout.astro";
       </div>`).join("") : "<p class='text-sm text-brand-charcoal/40 col-span-2'>No clients added yet. Add a client with birth data to auto-generate their SI guide.</p>";
   }
 
-  function openClientDetail(clientName: string) {
+  (window as any).openClientDetail = function(clientName: string) {
     const clients = load("clients");
     const client = clients.find((c: any) => c.name === clientName);
     if (!client) return;
@@ -715,7 +715,7 @@ import Layout from "@/components/base/Layout.astro";
     });
   }
 
-  function viewClientSIGuide(clientName: string) {
+  (window as any).viewClientSIGuide = function(clientName: string) {
     const clients = load("clients");
     const client = clients.find((c: any) => c.name === clientName);
     if (!client?.siGuide) return;

@@ -767,7 +767,10 @@ import "@/styles/global.css";
       <div class="bg-white rounded-[20px] border border-brand-teal/10 p-6 shadow-sm">
         <div class="flex items-center justify-between mb-4">
           <h3 class="font-heading font-bold text-brand-teal text-lg">Invoices (${invoices.length})</h3>
-          <button class="text-xs font-semibold bg-brand-teal text-white px-4 py-2 rounded-full hover:bg-brand-teal-light transition-all" onclick="event.stopPropagation();quickAddInvoice('${clientName.replace(/'/g, "\\'")}')">+ New Invoice</button>
+          <div class="flex items-center gap-2">
+            <button class="text-xs font-semibold bg-brand-teal text-white px-4 py-2 rounded-full hover:bg-brand-teal-light transition-all" onclick="event.stopPropagation();quickAddInvoice('${clientName.replace(/'/g, "\\'")}')">+ New Invoice</button>
+            <button class="text-xs font-semibold border border-brand-teal text-brand-teal px-4 py-2 rounded-full hover:bg-brand-teal/5 transition-all" onclick="event.stopPropagation();generateSuperbill('${clientName.replace(/'/g, "\\'")}')">Superbill</button>
+          </div>
         </div>
         <form id="inv-quick-form" class="hidden mb-4 p-4 bg-brand-paper rounded-xl space-y-3">
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -826,6 +829,70 @@ import "@/styles/global.css";
       window.showClientPage(clientName);
     }
   });
+
+  // Superbill generation
+  window.generateSuperbill = function(clientName) {
+    const clients = load("clients");
+    const client = clients.find((c: any) => c.name === clientName);
+    if (!client) return;
+    const invoices = load("invoices").filter((inv: any) => inv.client === clientName && inv.status === "paid");
+    if (!invoices.length) { alert("No paid invoices for this client. Mark an invoice as paid first."); return; }
+
+    const now = new Date().toISOString().split("T")[0];
+    const items = invoices.map((inv: any) => `
+      <tr><td style="padding:6px 8px;border:1px solid #ddd">${inv.created}</td><td style="padding:6px 8px;border:1px solid #ddd">97140</td><td style="padding:6px 8px;border:1px solid #ddd">${inv.desc || 'Manual therapy session'}</td><td style="padding:6px 8px;border:1px solid #ddd;text-align:right">$${inv.amount.toFixed(2)}</td></tr>
+    `).join("");
+
+    const superbill = `
+      <div style="font-family:Georgia,serif;max-width:700px;margin:0 auto;padding:2rem;color:#2A2A2A">
+        <div style="text-align:center;margin-bottom:2rem;padding-bottom:1rem;border-bottom:2px solid #005F73">
+          <h1 style="color:#005F73;margin:0 0 .25rem">Superbill / Insurance Receipt</h1>
+          <p style="color:#94A3B8;font-size:12px;margin:0">For out-of-network reimbursement</p>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem">
+          <div>
+            <p style="font-weight:700;color:#005F73;margin:0 0 .5rem">Provider</p>
+            <p style="margin:0;font-size:14px">Rhonda Roberts, BCSI, LMT</p>
+            <p style="margin:2px 0;font-size:14px">NPI: [Add your NPI number]</p>
+            <p style="margin:2px 0;font-size:14px">TX LMT License: [Add license #]</p>
+            <p style="margin:2px 0;font-size:14px">Cosmic Calibrations LLC</p>
+            <p style="margin:2px 0;font-size:14px">Austin, TX</p>
+          </div>
+          <div>
+            <p style="font-weight:700;color:#005F73;margin:0 0 .5rem">Client</p>
+            <p style="margin:0;font-size:14px">${client.name}</p>
+            ${client.email ? `<p style="margin:2px 0;font-size:14px">${client.email}</p>` : ""}
+            <p style="margin:2px 0;font-size:14px">Date: ${now}</p>
+          </div>
+        </div>
+        <table style="width:100%;border-collapse:collapse;margin-bottom:2rem">
+          <thead><tr style="background:#E6F0F2">
+            <th style="padding:8px;border:1px solid #ddd;text-align:left;font-size:12px">Date</th>
+            <th style="padding:8px;border:1px solid #ddd;text-align:left;font-size:12px">CPT</th>
+            <th style="padding:8px;border:1px solid #ddd;text-align:left;font-size:12px">Description</th>
+            <th style="padding:8px;border:1px solid #ddd;text-align:right;font-size:12px">Amount</th>
+          </tr></thead>
+          <tbody>${items}</tbody>
+          <tfoot><tr style="font-weight:700">
+            <td colspan="3" style="padding:8px;border:1px solid #ddd;text-align:right">Total Paid</td>
+            <td style="padding:8px;border:1px solid #ddd;text-align:right">$${invoices.reduce((s: number, i: any) => s + i.amount, 0).toFixed(2)}</td>
+          </tr></tfoot>
+        </table>
+        <div style="font-size:12px;color:#64748B;margin-bottom:1rem">
+          <p style="margin:0 0 .25rem"><strong>Service codes:</strong> CPT 97140 (Manual Therapy Techniques) — 75-90 min sessions</p>
+          <p style="margin:0 0 .25rem"><strong>Diagnosis codes (ICD-10):</strong> Determined per session based on client presentation</p>
+          <p style="margin:0 0 .25rem">Common: M54.2 (Cervicalgia), M54.5 (Low Back Pain), M62.89 (Muscle Spasm), R29.3 (Abnormal Posture)</p>
+        </div>
+        <div style="font-size:11px;color:#94A3B8;border-top:1px solid #ddd;padding-top:1rem">
+          <p style="margin:0">This is a detailed receipt for services rendered. Submit to your insurance for out-of-network reimbursement. Payment was collected at time of service. Provider does not bill insurance directly.</p>
+        </div>
+      </div>`;
+
+    const w = window.open("", "superbill", "width=800,height=900");
+    w?.document.write(`<!DOCTYPE html><html><head><title>Superbill — ${client.name}</title></head><body style="margin:0">${superbill}</body></html>`);
+    w?.document.close();
+    setTimeout(() => w?.print(), 500);
+  };
 
   // Quick-add helpers for client detail page
   window.quickAddSOAP = function(name) {

@@ -4,7 +4,7 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://cosmiccalibrations.com",
+  site: "https://cosmiccalibrations.madmanwithabox.org",
   integrations: [
     tailwind({
       applyBaseStyles: false,

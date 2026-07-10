@@ -1,0 +1,185 @@
+http:
+  routers:
+    portal:
+      entryPoints:
+      - websecure
+      rule: Host(`portal.madmanwithabox.org`)
+      service: portal-backend
+      tls:
+        certResolver: cloudflare
+    portal-api:
+      entryPoints:
+      - websecure
+      rule: Host(`portal.madmanwithabox.org`) && PathPrefix(`/api`)
+      service: portal-backend
+      tls:
+        certResolver: cloudflare
+    redirect-www:
+      entryPoints:
+      - websecure
+      rule: Host(`www.madmanwithabox.org`)
+      service: noop@internal
+      middlewares:
+      - redirect-www
+      tls:
+        certResolver: cloudflare
+    authentik-outpost:
+      entryPoints:
+      - websecure
+      rule: (Host(`madmanwithabox.org`) || Host(`www.madmanwithabox.org`) || Host(`home.madmanwithabox.org`)
+        || Host(`gov-lab.madmanwithabox.org`)) && PathPrefix(`/outpost.goauthentik.io`)
+      service: authentik-outpost
+      tls:
+        certResolver: cloudflare
+    home:
+      entryPoints:
+      - websecure
+      rule: Host(`home.madmanwithabox.org`)
+      service: home-backend
+      tls:
+        certResolver: cloudflare
+    home-assets:
+      entryPoints:
+      - websecure
+      rule: Host(`home.madmanwithabox.org`) && (PathPrefix(`/assets`) || PathPrefix(`/shared`))
+      service: home-backend
+      tls:
+        certResolver: cloudflare
+    gov-lab:
+      entryPoints:
+      - websecure
+      rule: Host(`gov-lab.madmanwithabox.org`)
+      service: gov-lab-backend
+      tls:
+        certResolver: cloudflare
+    main:
+      entryPoints:
+      - websecure
+      rule: (Host(`madmanwithabox.org`) || Host(`home.madmanwithabox.org`) || Host(`gov-lab.madmanwithabox.org`))
+      service: main-backend
+      tls:
+        certResolver: cloudflare
+    root:
+      entryPoints:
+      - websecure
+      rule: Host(`madmanwithabox.org`) || Host(`www.madmanwithabox.org`)
+      service: root-backend
+      tls:
+        certResolver: cloudflare
+      middlewares:
+      - root-redirect
+    portal-redirect:
+      entryPoints:
+      - websecure
+      rule: Host(`portal.madmanwithabox.org`)
+      service: portal-backend
+      tls:
+        certResolver: cloudflare
+    info-chatbot:
+      entryPoints:
+      - websecure
+      rule: Host(`info.madmanwithabox.org`)
+      service: chatbot-backend
+      tls:
+        certResolver: cloudflare
+    explore-chatbot:
+      entryPoints:
+      - websecure
+      rule: Host(`explore.madmanwithabox.org`)
+      service: chatbot-rhonda-backend
+      tls:
+        certResolver: cloudflare
+    rhonda-chatbot:
+      entryPoints:
+      - websecure
+      rule: Host(`rhonda.madmanwithabox.org`)
+      service: rhonda-chatbot-backend
+      tls:
+        certResolver: cloudflare
+      middlewares:
+      - rhonda-basic-auth
+    cosmic:
+      entryPoints:
+      - websecure
+      rule: Host(`cosmiccalibrations.madmanwithabox.org`)
+      service: cosmic-backend
+      tls:
+        certResolver: cloudflare
+  services:
+    cosmic-backend:
+      loadBalancer:
+        servers:
+        - url: http://cosmic-nginx:80
+    portal-backend:
+      loadBalancer:
+        servers:
+        - url: http://10.200.200.2:3006
+    authentik-outpost:
+      loadBalancer:
+        servers:
+        - url: http://authentik-proxy-outpost:9000
+    home-backend:
+      loadBalancer:
+        servers:
+        - url: http://10.200.200.2:8096
+    gov-lab-backend:
+      loadBalancer:
+        servers:
+        - url: http://10.200.200.2:8080
+    main-backend:
+      loadBalancer:
+        servers:
+        - url: http://10.200.200.2:80
+    root-backend:
+      loadBalancer:
+        servers:
+        - url: http://10.200.200.2:80
+    chatbot-backend:
+      loadBalancer:
+        servers:
+        - url: http://10.200.200.2:5099
+    chatbot-rhonda-backend:
+      loadBalancer:
+        servers:
+        - url: http://10.200.200.2:5100
+    rhonda-chatbot-backend:
+      loadBalancer:
+        servers:
+        - url: http://rhonda-chatbot:5010
+  middlewares:
+    redirect-www:
+      redirectRegex:
+        regex: ^https://www.madmanwithabox.org/(.*)
+        replacement: https://madmanwithabox.org/$1
+    root-redirect:
+      redirectRegex:
+        regex: ^https://madmanwithabox.org/(.*)
+        replacement: https://home.madmanwithabox.org/$1
+    rhonda-basic-auth:
+      basicAuth:
+        users:
+        - Rhonda:$apr1$iw6A2/it$s9VJ9zdrQ92jqWMtKt4VR1
+        realm: Rhonda Chart Chatbot
+  serversTransports:
+    portal-h1:
+      forwardingTimeouts:
+        dialTimeout: 10s
+        responseHeaderTimeout: 30s
+      maxIdleConnsPerHost: 50
+tcp:
+  routers:
+    to-home-https:
+      entryPoints:
+      - websecure
+      rule: HostSNI(`*`) && !HostSNI(`madmanwithabox.org`) && !HostSNI(`www.madmanwithabox.org`)
+        && !HostSNI(`home.madmanwithabox.org`) && !HostSNI(`gov-lab.madmanwithabox.org`)
+        && !HostSNI(`portal.madmanwithabox.org`) && !HostSNI(`info.madmanwithabox.org`)
+        && !HostSNI(`explore.madmanwithabox.org`) && !HostSNI(`rhonda.madmanwithabox.org`) && !HostSNI(`cosmiccalibrations.madmanwithabox.org`)
+      service: home-tcp
+      tls:
+        passthrough: true
+  services:
+    home-tcp:
+      loadBalancer:
+        servers:
+        - address: 10.200.200.2:443

@@ -1,0 +1,23 @@
+# Cosmic Calibrations — Traefik-dynamic.yaml additions
+# Add these to /opt/traefik-gateway/dynamic.yaml
+
+http:
+  routers:
+    # --- Add this router ---
+    cosmic:
+      entryPoints:
+      - websecure
+      rule: Host(`cosmiccalibrations.madmanwithabox.org`)
+      service: cosmic-backend
+      tls:
+        certResolver: cloudflare
+
+  services:
+    # --- Add this service ---
+    cosmic-backend:
+      loadBalancer:
+        servers:
+        - url: http://cosmic-nginx:80
+
+# Note: Add the 'cosmic-nginx' service to docker-compose.yml (below)
+# and add it to the 'gateway' network

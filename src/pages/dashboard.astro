@@ -1,10 +1,53 @@
 ---
-import Layout from "@/components/base/Layout.astro";
+import "@/styles/global.css";
+// Standalone page — no public site header/footer, self-contained layout
 ---
 
-<Layout seo={{ title: "Practitioner Portal", noindex: true }}>
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Practitioner Portal | Cosmic Calibrations</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+<style is:inline>
+  *,::before,::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+  body{font-family:'Source Sans 3',system-ui,sans-serif;background:#FAF9F6;color:#2A2A2A;line-height:1.65}
+  h1,h2,h3,h4{font-family:'Crimson Text',Georgia,serif}
+  :focus-visible{outline:2px solid #005F73;outline-offset:2px;border-radius:4px}
+  ::selection{background:rgba(0,95,115,.2);color:#005F73}
+  .bg-teal{background:#005F73}
+  .text-teal{color:#005F73}
+  .border-teal{border-color:#005F73}
+  .bg-paper{background:#FAF9F6}
+  .text-grey{color:#94A3B8}
+  .text-charcoal{color:#2A2A2A}
+  .rounded-card{border-radius:20px}
+  .rounded-input{border-radius:14px}
+  .font-heading{font-family:'Crimson Text',Georgia,serif}
+  .font-body{font-family:'Source Sans 3',system-ui,sans-serif}
+  .btn-teal{background:#005F73;color:#fff;border-radius:9999px;font-weight:600;transition:all .2s}
+  .btn-teal:hover{background:#0D7B8A;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+  .input-field{width:100%;border-radius:14px;border:1px solid rgba(0,95,115,.15);padding:10px 14px;font-size:14px;outline:none;transition:border-color .2s}
+  .input-field:focus{border-color:#005F73}
+  .card{background:#fff;border-radius:20px;border:1px solid rgba(0,95,115,.1)}
+  .nav-btn{width:100%;text-align:left;padding:8px 12px;border-radius:12px;font-size:13px;font-weight:500;transition:all .15s;display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;color:rgba(255,255,255,.6)}
+  .nav-btn:hover{color:#fff;background:rgba(255,255,255,.08)}
+  .nav-btn.active{background:rgba(255,255,255,.15);color:#fff}
+  .tab-panel{display:none}
+  .tab-panel.active{display:block}
+  label.xlabel{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#94A3B8;margin-bottom:6px}
+  .section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:#94A3B8}
+</style>
+</head>
+<body>
   <!-- Password Gate -->
-  <section id="auth-gate" class="min-h-screen flex items-center justify-center bg-brand-teal px-6">
+  <section id="auth-gate" class="min-h-screen flex items-center justify-center bg-teal px-6">
     <div class="max-w-sm w-full text-center">
       <div class="mb-8">
         <div class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-4">
@@ -22,13 +65,24 @@ import Layout from "@/components/base/Layout.astro";
   </section>
 
   <!-- Dashboard (hidden until auth) -->
-  <div id="app" class="hidden h-screen overflow-hidden bg-brand-paper flex">
-    <!-- Sidebar -->
-    <aside class="w-56 bg-brand-teal text-white flex flex-col shrink-0 overflow-y-auto">
-      <div class="p-5 border-b border-white/10">
-        <p class="font-heading font-bold text-sm">Cosmic Calibrations</p>
-        <p class="text-[10px] text-brand-grey/70 uppercase tracking-widest mt-0.5">Practitioner Portal</p>
+  <!-- Dashboard (hidden until auth) -->
+  <div id="app" class="hidden h-screen flex flex-col overflow-hidden bg-paper">
+    <!-- Top Bar -->
+    <header class="bg-teal text-white flex items-center justify-between px-6 h-14 shrink-0 border-b border-white/10">
+      <div class="flex items-center gap-3">
+        <span class="font-heading font-bold text-sm">Cosmic Calibrations</span>
+        <span class="text-[10px] text-grey/70 uppercase tracking-widest hidden sm:inline">Practitioner Portal</span>
       </div>
+      <button id="logout-btn" class="text-xs text-white/40 hover:text-white transition-colors flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        Logout
+      </button>
+    </header>
+
+    <!-- Body: Sidebar + Content -->
+    <div class="flex flex-1 overflow-hidden">
+    <!-- Sidebar -->
+    <aside class="w-52 bg-teal text-white flex flex-col shrink-0 overflow-y-auto">
       <nav class="flex-1 p-3 space-y-1" id="sidebar-nav" set:html={`
         ${[
           { id: "overview", label: "Overview", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
@@ -45,12 +99,6 @@ import Layout from "@/components/base/Layout.astro";
           </button>
         `).join("")}
       `}></nav>
-      <div class="p-3 border-t border-white/10">
-        <button id="logout-btn" class="w-full text-left px-3 py-2 rounded-xl text-xs text-white/40 hover:text-white hover:bg-white/10 transition-all flex items-center gap-2">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
-          Logout
-        </button>
-      </div>
     </aside>
 
     <!-- Main Content -->
@@ -286,8 +334,10 @@ import Layout from "@/components/base/Layout.astro";
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="invoice-list"></div>
       </div>
     </main>
-  </div>
-</Layout>
+    </div><!-- /flex body -->
+  </div><!-- /app -->
+</body>
+</html>
 
 <script>
   const ACCESS_KEY = "cosmic-stars-2026";

@@ -98,6 +98,13 @@ http:
         certResolver: cloudflare
       middlewares:
       - rhonda-basic-auth
+    http-to-https:
+      entryPoints:
+      - web
+      rule: "PathPrefix(`/`)"
+      service: noop@internal
+      middlewares:
+      - redirect-https
     cosmic:
       entryPoints:
       - websecure
@@ -151,6 +158,10 @@ http:
       redirectRegex:
         regex: ^https://www.madmanwithabox.org/(.*)
         replacement: https://madmanwithabox.org/$1
+    redirect-https:
+      redirectScheme:
+        scheme: https
+        permanent: true
     root-redirect:
       redirectRegex:
         regex: ^https://madmanwithabox.org/(.*)

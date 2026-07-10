@@ -1,0 +1,391 @@
+---
+import Layout from "@/components/base/Layout.astro";
+import BookButton from "@/components/ui/BookButton.astro";
+---
+
+<Layout seo={{ title: "About Structural Integration" }}>
+  <!-- Header -->
+  <section class="pt-28 pb-12 px-6 bg-white">
+    <div class="max-w-4xl mx-auto">
+      <p class="section-label mb-4">Learn</p>
+      <h1 class="text-4xl md:text-5xl font-heading font-bold text-brand-teal mb-6">
+        About Structural Integration
+      </h1>
+      <p class="text-lg text-brand-charcoal/60 max-w-2xl leading-relaxed">
+        A systematic approach to reorganizing your body's connective tissue. Learn what
+        makes SI different, how fascia shapes your structure, and the science behind the work.
+      </p>
+    </div>
+  </section>
+
+  <!-- Tab Navigation -->
+  <section class="pb-0 px-6 bg-white sticky top-16 z-40 border-b border-brand-teal/10">
+    <div class="max-w-4xl mx-auto">
+      <nav class="flex overflow-x-auto -mb-px gap-1" role="tablist">
+        {[
+          { id: "what-is-si", label: "What is SI" },
+          { id: "fascia", label: "Understanding Fascia" },
+          { id: "history", label: "The History" },
+          { id: "research", label: "The Research" },
+        ].map((tab, i) => (
+          <button
+            id={`tab-${tab.id}`}
+            role="tab"
+            aria-selected={i === 0 ? "true" : "false"}
+            class={`si-tab whitespace-nowrap px-5 py-4 text-sm font-semibold border-b-2 transition-colors ${
+              i === 0
+                ? "text-brand-teal border-brand-teal"
+                : "text-brand-grey border-transparent hover:text-brand-teal"
+            }`}
+            data-tab={tab.id}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </nav>
+    </div>
+  </section>
+
+  <!-- Tab Content -->
+  <section class="py-16 px-6 bg-white">
+    <div class="max-w-4xl mx-auto">
+
+      <!-- TAB 1: What is Structural Integration -->
+      <div id="panel-what-is-si" class="si-panel prose-cosmic space-y-6">
+        <h2 class="text-2xl md:text-3xl font-heading font-bold text-brand-teal mb-2">
+          It's not massage. It's not chiropractic. So what is it?
+        </h2>
+
+        <p>
+          Structural Integration is a systematic, hands-on approach to reorganizing your body's
+          connective tissue — the fascia that wraps around every muscle, bone, and organ. Think of
+          it this way: if massage helps a single room feel more relaxed, Structural Integration is
+          a full architectural renovation of the house. We're not chasing individual knots or
+          temporarily loosening tight spots. We're methodically working through your entire
+          structure, session by session, to change how your body relates to gravity.
+        </p>
+
+        <h3 class="text-xl font-heading font-bold text-brand-teal mt-8">The 10-Series Protocol</h3>
+        <p>
+          What makes SI fundamentally different is that it's a <strong>ten-session protocol</strong>,
+          not a series of standalone appointments. Each session has a specific territory and goal,
+          and each one builds on the work done in the session before. You don't just come in whenever
+          something hurts — you move through a deliberate progression that opens your breath, grounds
+          your feet, integrates your core, and ultimately teaches your whole body to move as one
+          coordinated unit.
+        </p>
+        <p>
+          By the end of the series, you're not just feeling better — you're standing differently,
+          moving with less effort, and holding yourself in a way that doesn't require constant
+          muscular bracing.
+        </p>
+
+        <h3 class="text-xl font-heading font-bold text-brand-teal mt-8">Why the results last</h3>
+        <p>
+          Other modalities often produce temporary relief because they're working at the level of
+          muscle tension, which can return the moment you sit at your desk again. SI works one layer
+          deeper — at the level of the fascia, which is the architectural fabric that actually
+          determines your shape. When fascia becomes dehydrated, shortened, or stuck from prolonged
+          sitting, old injuries, or surgical scar tissue, it literally pulls your structure out of
+          alignment. We work to rehydrate, lengthen, and reorganize that fabric. Because we're
+          changing the physical organization of the tissue itself — not just relaxing muscles — the
+          results persist. Your body has learned a new way to be.
+        </p>
+
+        <div class="bg-brand-teal/5 border border-brand-teal/10 rounded-[20px] p-8 mt-8">
+          <h3 class="font-heading font-bold text-brand-teal mb-3">Patterns, not symptoms</h3>
+          <p class="text-brand-charcoal/70 leading-relaxed text-sm">
+            Most approaches chase symptoms: "My shoulder hurts, so work on my shoulder." But your
+            body doesn't experience problems in isolation. That shoulder issue might actually
+            originate from a hip that's been rotated since you sprained your ankle five years ago
+            and started compensating. SI works with these <strong>patterns of stress</strong> — the
+            whole-body compensations your structure has developed over years of sitting, leaning,
+            favoring one side, or protecting an old injury. We're not treating the shoulder. We're
+            untangling the full-body pattern that made the shoulder a problem in the first place.
+          </p>
+        </div>
+      </div>
+
+      <!-- TAB 2: Understanding Fascia -->
+      <div id="panel-fascia" class="si-panel prose-cosmic space-y-6 hidden">
+        <h2 class="text-2xl md:text-3xl font-heading font-bold text-brand-teal mb-2">
+          The tissue most people have never heard of
+        </h2>
+
+        <p>
+          If you've taken an anatomy class — or even just looked at those plastic models in a
+          doctor's office — you've seen muscles, bones, and organs neatly separated and color-coded.
+          What you didn't see is what was removed to make that model: the fascia. For centuries,
+          anatomists cut away and discarded this continuous web of connective tissue to get a clearer
+          look at what was underneath. But fascia isn't just packing material. It's the living fabric
+          that gives your body its shape, connects every structure to every other structure, and
+          literally holds you together.
+        </p>
+
+        <div class="bg-brand-teal/5 border border-brand-teal/10 rounded-[20px] p-8 my-8">
+          <h3 class="font-heading font-bold text-brand-teal mb-3">The best way to picture it</h3>
+          <p class="text-brand-charcoal/70 leading-relaxed text-sm">
+            Imagine you're wearing a thin, silvery wetsuit underneath your skin that wraps around
+            every muscle fiber, every bone, and every organ. That wetsuit is continuous — a single,
+            uninterrupted web from the top of your head to the soles of your feet. When it's healthy,
+            it's hydrated and slippery, allowing your muscles to glide past each other without
+            friction. It's what makes movement feel effortless.
+          </p>
+        </div>
+
+        <h3 class="text-xl font-heading font-bold text-brand-teal mt-8">What happens when fascia goes wrong</h3>
+        <p>
+          Under prolonged stress — sitting eight hours a day at a desk, recovering from surgery, or
+          compensating for an old injury — fascia responds by <strong>locking up, binding, and shortening
+          to protect itself</strong>. It's a survival mechanism. Your body senses chronic strain and
+          reinforces the area by laying down additional collagen fibers, creating adhesions and
+          restriction. That wetsuit that should be flexible and gliding becomes dry, sticky, and tight
+          in certain areas.
+        </p>
+        <p>
+          And because fascia is continuous, a snag in one place creates tension that ripples outward.
+          A restriction in your right hip can pull on your lower back, which pulls on your shoulder,
+          which pulls on your neck — and suddenly you have chronic neck pain that no amount of neck
+          massage resolves, because the problem was never in your neck.
+        </p>
+
+        <h3 class="text-xl font-heading font-bold text-brand-teal mt-8">Why stretching isn't the same</h3>
+        <p>
+          Stretching works on muscle fibers, which are designed to contract and lengthen. Fascia is
+          different — it's more like a three-dimensional geodesic web that needs to be hydrated and
+          reorganized, not just pulled on. Think of it like a sweater. If you have a snag in one spot,
+          pulling harder on the fabric doesn't fix the snag — it actually distorts everything around
+          it. SI works by systematically addressing those snags, rehydrating the tissue, and restoring
+          glide between layers. When fascia moves freely, muscles can do their job without fighting
+          against restriction, and your body finds its way back to center.
+        </p>
+
+        <div class="bg-brand-paper border border-brand-teal/10 rounded-[20px] p-8 mt-8 text-center">
+          <p class="font-heading italic text-brand-teal text-lg mb-2">Somatic check-in</p>
+          <p class="text-brand-charcoal/70 leading-relaxed text-sm">
+            Take a moment right now to notice the space between your ears and your shoulders. Without
+            changing anything, just observe. Does one side feel higher? Is there a subtle pull running
+            from your shoulder into your jaw or down into your chest? That's your fascia telling you a
+            story about how you've been holding yourself. Now imagine what it would feel like if that
+            tension simply wasn't there. That's the direction SI moves you toward.
+          </p>
+        </div>
+      </div>
+
+      <!-- TAB 3: The History -->
+      <div id="panel-history" class="si-panel prose-cosmic space-y-6 hidden">
+        <h2 class="text-2xl md:text-3xl font-heading font-bold text-brand-teal mb-2">
+          A biochemist's radical insight
+        </h2>
+
+        <p>
+          The story of Structural Integration begins with <strong>Dr. Ida Rolf</strong>, a biochemist
+          with a PhD from Columbia University who conducted research at Rockefeller University in the
+          early 20th century. Dr. Rolf asked a question that seems simple but was revolutionary in its
+          implications: <em>"What conditions must be met for the human body to be organized and
+          function at its best?"</em>
+        </p>
+        <p>
+          Her core insight was about <strong>gravity</strong>. Most of us think of gravity as something
+          that weighs us down — and for good reason. When our structure is out of alignment, gravity
+          is constantly pulling us further into collapse, forcing our muscles to brace and compensate
+          just to keep us upright. But Dr. Rolf realized that when the body is properly aligned,
+          gravity actually becomes a <strong>supportive force</strong> — it lifts, lengthens, and
+          organizes us.
+        </p>
+
+        <h3 class="text-xl font-heading font-bold text-brand-teal mt-8">From Esalen to a worldwide field</h3>
+        <p>
+          In the 1950s and 60s, Dr. Rolf developed and refined her method at the Esalen Institute
+          in Big Sur, California — the same place that birthed much of the modern human potential
+          movement. She called her work <strong>Rolfing</strong>, and it attracted people seeking
+          profound physical change that went beyond what conventional medicine or massage could offer.
+        </p>
+        <p>
+          Over time, Dr. Rolf formalized her approach into the <strong>Ten Series</strong> — a
+          systematic protocol of sessions, each with a specific anatomical focus, that together
+          produce whole-body transformation. She founded the Rolf Institute of Structural Integration
+          to train and certify practitioners, creating a rigorous standard for the field.
+        </p>
+
+        <h3 class="text-xl font-heading font-bold text-brand-teal mt-8">The BCSI credential</h3>
+        <p>
+          As Structural Integration grew beyond Dr. Rolf's direct lineage, the field recognized the
+          need for an independent credentialing body. The <strong>International Association of
+          Structural Integrators (IASI)</strong> was established, and it created the <strong>Board
+          Certified Structural Integrator (BCSI)</strong> designation — the field's highest
+          professional credential. Earning it requires 500+ hours of specialized training, documented
+          clinical practice hours, and passing a comprehensive board examination.
+        </p>
+        <p>
+          Today, "Rolfing" is a trademarked term for SI practiced by graduates of the Rolf Institute.
+          "Structural Integration" is the broader field — <strong>all Rolfing is Structural Integration,
+          but not all Structural Integration is Rolfing</strong>. A BCSI-certified practitioner has
+          met the same rigorous standard regardless of which IASI-recognized school they attended.
+        </p>
+        <p>
+          Rhonda trained at the <strong>Structura Institute</strong>, an IASI-recognized program
+          whose philosophy bridges advanced education in manual therapy with current fascial research.
+        </p>
+      </div>
+
+      <!-- TAB 4: The Research -->
+      <div id="panel-research" class="si-panel prose-cosmic space-y-6 hidden">
+        <h2 class="text-2xl md:text-3xl font-heading font-bold text-brand-teal mb-2">
+          The science is catching up
+        </h2>
+
+        <p>
+          For decades, Structural Integration practitioners observed consistent results that they
+          couldn't fully explain through existing science: chronic pain resolving, posture
+          reorganizing, movement becoming easier, and clients reporting not just physical change
+          but a felt sense of being more "at home" in their bodies.
+        </p>
+        <p>
+          That has changed dramatically in the last two decades. Modern fascial research — using
+          tools like MRI, ultrasound elastography, and electron microscopy — has begun to validate
+          what SI practitioners have been working with since Dr. Rolf's time. Scientists can now
+          observe fascia in living tissue, watching how it slides (or fails to slide) between
+          muscle layers, how it responds to mechanical pressure, and how it communicates through
+          the nervous system.
+        </p>
+
+        <h3 class="text-xl font-heading font-bold text-brand-teal mt-8">Key findings</h3>
+        <p>
+          Research presented at the <strong>Fascia Research Congress</strong> and published in
+          peer-reviewed journals has demonstrated:
+        </p>
+
+        <div class="grid sm:grid-cols-2 gap-4 mt-4 not-prose">
+          {[
+            {
+              title: "Chronic Pain Reduction",
+              body: "Multiple studies show SI significantly reduces chronic low back pain, often in cases where other interventions had failed. A systematic whole-body approach appears more effective than localized treatment.",
+            },
+            {
+              title: "Improved Range of Motion",
+              body: "SI improves joint range not by stretching muscles, but by restoring the ability of fascial layers to glide independently. When adhesions release, movement capacity returns without force.",
+            },
+            {
+              title: "Nervous System Regulation",
+              body: "SI sessions lower sympathetic nervous system activity (fight-or-flight) and increase parasympathetic tone (rest-and-digest). Clients often feel calmer and more grounded — the work changes the nervous system's baseline.",
+            },
+            {
+              title: "Proprioceptive Improvement",
+              body: "Fascia contains more sensory nerve endings than muscle. Releasing restrictions improves your sense of where your body is in space — why clients say they feel 'more connected' after sessions.",
+            },
+          ].map((item) => (
+            <div class="rounded-[16px] bg-brand-paper border border-brand-teal/10 p-6">
+              <h4 class="font-heading font-bold text-brand-teal mb-2">{item.title}</h4>
+              <p class="text-sm text-brand-charcoal/70 leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+
+        <h3 class="text-xl font-heading font-bold text-brand-teal mt-8">Why fascia was overlooked</h3>
+        <p>
+          For most of medical history, fascia was treated as inert packing material — something to
+          be cut through and discarded to reveal the "important" structures underneath. It doesn't
+          show up well on X-rays. Until recently, we simply didn't have the tools to study it as a
+          living, dynamic tissue. The shift has been profound: fascia is now understood as a
+          body-wide sensory organ, a communication network, and a structural matrix that directly
+          influences everything from athletic performance to chronic pain to emotional wellbeing.
+        </p>
+        <p>
+          What this means for you is simple: the work we do is grounded in a growing body of
+          scientific evidence, not just tradition. The improvements you feel have a basis in
+          measurable fascial change — and research continues to reveal why Structural Integration
+          produces the lasting results that practitioners have observed for over 70 years.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ: About the Credential -->
+  <section class="py-16 px-6 bg-brand-paper">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-2xl md:text-3xl font-heading font-bold text-brand-teal mb-10">
+        About the Credential
+      </h2>
+
+      <div class="space-y-8">
+        <div>
+          <h3 class="font-heading font-bold text-lg text-brand-teal mb-3">What does BCSI mean?</h3>
+          <p class="text-brand-charcoal/70 leading-relaxed text-sm">
+            <strong>BCSI</strong> stands for <strong>Board Certified Structural Integrator</strong>. It is the
+            highest professional credential in the Structural Integration field, administered by the
+            International Association of Structural Integrators (IASI). To earn the BCSI designation, a
+            practitioner must complete 500 or more hours of specialized training at an IASI-recognized
+            school, accumulate documented clinical practice hours, and pass a comprehensive board
+            examination. The credential must be maintained through continuing education. When you see
+            "BCSI" after a practitioner's name, it means they have met the field's most rigorous
+            standard — equivalent to board certification in medicine or other healthcare professions.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="font-heading font-bold text-lg text-brand-teal mb-3">How is SI different from Rolfing?</h3>
+          <p class="text-brand-charcoal/70 leading-relaxed text-sm">
+            Rolfing and Structural Integration share the same foundation — the ten-session protocol
+            developed by Dr. Ida Rolf — but differ in scope and lineage. <strong>Rolfing</strong> is a
+            trademarked term for work done by practitioners trained at the Dr. Ida Rolf Institute.
+            <strong>Structural Integration</strong> is the broader professional field that includes all
+            IASI-recognized training programs. All Rolfing is Structural Integration, but not all
+            Structural Integration is Rolfing. Both Rolfers and BCSI-certified practitioners are
+            trained to the same high standard — they simply attended different schools.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="font-heading font-bold text-lg text-brand-teal mb-3">Is SI regulated or licensed in Texas?</h3>
+          <p class="text-brand-charcoal/70 leading-relaxed text-sm">
+            Structural Integration is not a separately licensed profession in most states, including
+            Texas. It generally falls under the scope of practice for licensed massage therapists or
+            bodyworkers, though the training is far more extensive than what a standard massage license
+            requires. The professional standard is set by <strong>IASI certification (BCSI)</strong>
+            rather than by state licensing boards. When choosing a practitioner, the BCSI credential is
+            your assurance that they have met the field's highest educational and clinical standards.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 px-6 bg-brand-teal text-center">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="text-3xl font-heading font-bold text-white mb-4">Ready to experience it?</h2>
+      <p class="text-white/70 mb-8">Book a free 15-minute consultation to see if Structural Integration is right for you.</p>
+      <BookButton label="Book a Free Consult" variant="primary-light" class="!px-8 !py-4 !text-base" />
+    </div>
+  </section>
+</Layout>
+
+<script>
+  function switchTab(tabId: string) {
+    document.querySelectorAll(".si-tab").forEach((btn) => {
+      const isActive = (btn as HTMLElement).dataset.tab === tabId;
+      btn.setAttribute("aria-selected", String(isActive));
+      if (isActive) {
+        btn.classList.add("text-brand-teal", "border-brand-teal");
+        btn.classList.remove("text-brand-grey", "border-transparent", "hover:text-brand-teal");
+      } else {
+        btn.classList.add("text-brand-grey", "border-transparent", "hover:text-brand-teal");
+        btn.classList.remove("text-brand-teal", "border-brand-teal");
+      }
+    });
+    document.querySelectorAll(".si-panel").forEach((panel) => {
+      if (panel.id === `panel-${tabId}`) {
+        panel.classList.remove("hidden");
+      } else {
+        panel.classList.add("hidden");
+      }
+    });
+  }
+  document.querySelectorAll(".si-tab").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const tabId = (btn as HTMLElement).dataset.tab;
+      if (tabId) switchTab(tabId);
+    });
+  });
+</script>

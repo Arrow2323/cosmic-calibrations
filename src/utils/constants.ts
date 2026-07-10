@@ -40,6 +40,7 @@ export const BOOKING = {
 export const NAV = {
   main: [
     { label: "The 10-Series", href: "/#ten-series" },
+    { label: "About SI", href: "/about-si" },
     { label: "About", href: "/about" },
     { label: "What to Expect", href: "/what-to-expect" },
     { label: "FAQ", href: "/faq" },

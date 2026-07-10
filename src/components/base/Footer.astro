@@ -1,5 +1,5 @@
 ---
-import { BUSINESS, NAV } from "@/utils/constants";
+import { BUSINESS, NAV, SOCIAL } from "@/utils/constants";
 ---
 
 <footer class="bg-brand-teal text-white py-16 px-6 border-t border-white/10">
@@ -40,6 +40,28 @@ import { BUSINESS, NAV } from "@/utils/constants";
         <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-grey mb-1">Legal</p>
         <a href="/privacy" class="text-sm text-white/60 hover:text-white transition-colors">Privacy Policy</a>
         <a href="/terms" class="text-sm text-white/60 hover:text-white transition-colors">Terms of Service</a>
+        <a href="/blog" class="text-sm text-white/60 hover:text-white transition-colors">Blog</a>
+        <a href="/testimonials" class="text-sm text-white/60 hover:text-white transition-colors">Testimonials</a>
+      </div>
+
+      <!-- Connect -->
+      <div class="flex flex-col gap-3">
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-grey mb-1">Connect</p>
+        {SOCIAL.googleBusiness && SOCIAL.googleBusiness !== "https://g.page/r/PLACEHOLDER" ? (
+          <a href={SOCIAL.googleBusiness} target="_blank" rel="noopener" class="text-sm text-white/60 hover:text-white transition-colors">Google Business Profile</a>
+        ) : (
+          <span class="text-sm text-white/30">Google Business — coming soon</span>
+        )}
+        {SOCIAL.instagram ? (
+          <a href={SOCIAL.instagram} target="_blank" rel="noopener" class="text-sm text-white/60 hover:text-white transition-colors">Instagram</a>
+        ) : (
+          <span class="text-sm text-white/30">Instagram — coming soon</span>
+        )}
+        {SOCIAL.facebook ? (
+          <a href={SOCIAL.facebook} target="_blank" rel="noopener" class="text-sm text-white/60 hover:text-white transition-colors">Facebook</a>
+        ) : (
+          <span class="text-sm text-white/30">Facebook — coming soon</span>
+        )}
       </div>
     </div>
 

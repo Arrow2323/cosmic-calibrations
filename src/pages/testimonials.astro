@@ -1,0 +1,86 @@
+---
+import Layout from "@/components/base/Layout.astro";
+import { PLACEHOLDERS } from "@/utils/constants";
+---
+
+<Layout seo={{ title: "Client Testimonials" }}>
+  <section class="pt-28 pb-16 px-6 bg-white">
+    <div class="max-w-4xl mx-auto text-center">
+      <p class="section-label mb-4">Results</p>
+      <h1 class="text-4xl md:text-5xl font-heading font-bold text-brand-teal mb-4">
+        What Clients Say
+      </h1>
+      <p class="text-lg text-brand-charcoal/60 max-w-2xl mx-auto leading-relaxed">
+        Real stories from people who've experienced the 10-series.
+        Each testimonial represents a completed structural integration journey.
+      </p>
+    </div>
+  </section>
+
+  <!-- Testimonial Cards -->
+  <section class="py-16 px-6 bg-brand-paper">
+    <div class="max-w-4xl mx-auto space-y-6">
+      {PLACEHOLDERS.testimonials.map((t) => (
+        <div class="bg-white rounded-[24px] border border-brand-teal/10 p-8 md:p-10 shadow-sm">
+          <div class="flex items-start gap-4 mb-6">
+            <svg class="w-10 h-10 text-brand-teal/30 shrink-0 mt-1" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151C7.563 6.068 6 8.789 6 11h4v10H0z"/></svg>
+            <p class="text-brand-charcoal/70 leading-relaxed italic font-heading text-lg">{t.quote}</p>
+          </div>
+          <div class="border-t border-brand-teal/10 pt-4">
+            <p class="text-sm font-semibold text-brand-teal">{t.name}</p>
+            <p class="text-xs text-brand-grey">{t.detail}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Placeholder note -->
+    <div class="max-w-4xl mx-auto mt-12">
+      <div class="bg-amber-50 border border-amber-200 rounded-[20px] p-6 text-center">
+        <p class="text-sm text-amber-700 font-semibold mb-1">Placeholder content</p>
+        <p class="text-xs text-amber-600">These testimonials are templates. Real client quotes will replace them as Rhonda completes sessions and collects feedback.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Before/After Section -->
+  <section class="py-16 px-6 bg-white">
+    <div class="max-w-4xl mx-auto text-center">
+      <p class="section-label mb-4">Visual Proof</p>
+      <h2 class="text-3xl font-heading font-bold text-brand-teal mb-4">Before & After</h2>
+      <p class="text-lg text-brand-charcoal/60 max-w-2xl mx-auto mb-10 leading-relaxed">
+        Side-profile posture photos taken at the start and end of the 10-series.
+        All photos shared with explicit client consent.
+      </p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-brand-paper rounded-[24px] border border-brand-teal/10 p-10 text-center h-64 flex items-center justify-center">
+          <div>
+            <p class="text-xs font-bold text-brand-grey uppercase tracking-[0.2em] mb-2">Before</p>
+            <p class="text-sm text-brand-charcoal/30 italic">Client photos coming soon</p>
+          </div>
+        </div>
+        <div class="bg-brand-paper rounded-[24px] border border-brand-teal/10 p-10 text-center h-64 flex items-center justify-center">
+          <div>
+            <p class="text-xs font-bold text-brand-grey uppercase tracking-[0.2em] mb-2">After — 10 Sessions</p>
+            <p class="text-sm text-brand-charcoal/30 italic">Client photos coming soon</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video placeholder -->
+  <section class="py-16 px-6 bg-brand-teal text-center">
+    <div class="max-w-2xl mx-auto">
+      <p class="section-label mb-4 text-brand-grey/80">Watch</p>
+      <h2 class="text-3xl font-heading font-bold text-white mb-4">See the work in action</h2>
+      <p class="text-white/60 mb-8 text-sm">A short video introducing the practice, the space, and what to expect in a session.</p>
+      <div class="bg-white/10 rounded-[24px] border border-white/20 h-64 flex items-center justify-center">
+        <div class="text-center">
+          <svg class="w-12 h-12 text-white/30 mx-auto mb-3" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          <p class="text-white/40 text-sm italic">Video coming soon</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,41 @@
+---
+import Layout from "@/components/base/Layout.astro";
+---
+
+<Layout seo={{ title: "Blog & Resources" }}>
+  <section class="pt-28 pb-24 px-6 bg-white">
+    <div class="max-w-4xl mx-auto">
+      <p class="section-label mb-4">Learn</p>
+      <h1 class="text-4xl md:text-5xl font-heading font-bold text-brand-teal mb-6">
+        Blog & Resources
+      </h1>
+      <p class="text-lg text-brand-charcoal/60 max-w-2xl leading-relaxed mb-12">
+        Educational articles about structural integration, fascia, posture, and body awareness.
+        New content added as Rhonda develops her practice.
+      </p>
+
+      <!-- Placeholder posts -->
+      <div class="grid md:grid-cols-2 gap-6">
+        {[
+          { title: "What Your Desk Is Doing to Your Fascia", date: "Coming soon", excerpt: "Eight hours of sitting doesn't just make you stiff — it literally reshapes your connective tissue. Here's how, and what you can do about it." },
+          { title: "The 10-Series: Why Order Matters", date: "Coming soon", excerpt: "Each session in the series builds on the last. Why jumping around or stopping early means you miss the full benefit of the work." },
+          { title: "Fascia vs. Muscle: What's the Difference?", date: "Coming soon", excerpt: "Most bodywork targets muscle. Structural Integration works one layer deeper. Understanding fascia changes how you think about your body." },
+          { title: "Breathing Better: The First Thing That Changes", date: "Coming soon", excerpt: "Session 1 opens the ribcage. Most clients notice their breath within the first session. Here's why that matters for everything else." },
+          { title: "Post-Surgical Recovery: Beyond Physical Therapy", date: "Coming soon", excerpt: "PT gets you functional again. SI addresses the compensations and scar tissue restrictions that PT doesn't reach." },
+          { title: "Tech Neck Is Real: Reversing the Forward Head", date: "Coming soon", excerpt: "Years of screens pull your head forward. The weight of your head multiplies with every inch. SI systematically brings it back." },
+        ].map((post) => (
+          <div class="bg-brand-paper rounded-[20px] border border-brand-teal/10 p-6 hover:border-brand-teal/30 transition-all">
+            <p class="text-xs font-bold text-brand-grey uppercase tracking-[0.12em] mb-2">{post.date}</p>
+            <h3 class="text-lg font-heading font-bold text-brand-teal mb-2">{post.title}</h3>
+            <p class="text-sm text-brand-charcoal/60 leading-relaxed">{post.excerpt}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-12 bg-amber-50 border border-amber-200 rounded-[20px] p-6 text-center">
+        <p class="text-sm text-amber-700 font-semibold mb-1">Placeholder content</p>
+        <p class="text-xs text-amber-600">These article topics are suggestions. Rhonda will write or provide content for publication as her practice grows.</p>
+      </div>
+    </div>
+  </section>
+</Layout>

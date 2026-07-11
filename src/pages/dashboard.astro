@@ -92,6 +92,7 @@ import "@/styles/global.css";
           { id: "clients", label: "Client Files", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" },
           { id: "financial", label: "Financial", icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
           { id: "invoicing", label: "Invoicing", icon: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" },
+          { id: "stars-guide", label: "Stars Guide", icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" },
         ].map(tab => `
           <button class="nav-btn w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium transition-all flex items-center gap-3 ${tab.id === 'overview' ? 'bg-white/15 text-white' : 'text-white/60 hover:text-white hover:bg-white/10'}" data-tab="${tab.id}">
             <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="${tab.icon}"/></svg>
@@ -304,6 +305,45 @@ import "@/styles/global.css";
             <button type="submit" class="rounded-full bg-brand-teal text-white font-semibold px-5 py-3 text-sm hover:bg-brand-teal-light transition-all">Add</button>
           </form>
           <div id="fin-list" class="mt-6 space-y-2"></div>
+        </div>
+      </div>
+
+      <!-- Stars Guide Panel -->
+      <div id="panel-stars-guide" class="tab-panel hidden space-y-6">
+        <div><p class="section-label mb-2">Reference</p><h1 class="text-3xl font-heading font-bold text-brand-teal">Stars Engine — How It Works</h1><p class="text-sm text-brand-charcoal/60 mt-2">Understanding the astrological computation that powers the SI prediction reports.</p></div>
+        <div class="bg-white rounded-[20px] border border-brand-teal/10 p-6 shadow-sm space-y-6">
+          <div>
+            <h3 class="font-heading font-bold text-brand-teal text-lg mb-2">What the Stars Engine Does</h3>
+            <p class="text-sm text-brand-charcoal/70 leading-relaxed">The Stars Engine computes a complete birth chart from a client's birth date, time, and location using JPL ephemeris data — the same NASA-grade astronomical calculations used by professional astrologers. It determines exact planetary positions and computes <strong>128 distinct data layers</strong> spanning Western tropical, Vedic sidereal, Human Design, Gene Keys, Ba Zi, Mayan, cosmobiology midpoints, and more.</p>
+            <p class="text-sm text-brand-charcoal/70 leading-relaxed mt-3">A dedicated <strong>structural_integration</strong> computation module maps this architectural data onto the 10-session Rolfing protocol — translating planetary positions into fascial holding patterns, Gene Key shadows into body regions, and cosmobiology midpoints into structural friction warnings.</p>
+          </div>
+          <div class="bg-brand-paper rounded-[16px] p-5">
+            <h4 class="font-heading font-bold text-brand-teal mb-3">What the SI Report Contains</h4>
+            <div class="grid md:grid-cols-2 gap-4 text-sm">
+              <div class="bg-white rounded-[14px] p-4 border border-brand-teal/5"><p class="font-heading font-bold text-brand-teal text-sm mb-1">Client Summary</p><p class="text-xs text-brand-charcoal/60 leading-relaxed">HD type, authority, defined/open centers, elemental distribution, Ayurvedic constitution. The high-level architecture of the person's biopsychological structure.</p></div>
+              <div class="bg-white rounded-[14px] p-4 border border-brand-teal/5"><p class="font-heading font-bold text-brand-teal text-sm mb-1">Armor Map</p><p class="text-xs text-brand-charcoal/60 leading-relaxed">7 Reichian character armor segments (Ocular through Pelvic) mapped to fascial patterns. Each rated Armored/Flexible with session numbers. Tells you WHERE the body holds its story.</p></div>
+              <div class="bg-white rounded-[14px] p-4 border border-brand-teal/5"><p class="font-heading font-bold text-brand-teal text-sm mb-1">Polyvagal Guidance</p><p class="text-xs text-brand-charcoal/60 leading-relaxed">Nervous system profile: ventral capacity, sympathetic risk, dorsal shutdown risk. Pacing instructions, shutdown signs, whether verbal check-ins are reliable.</p></div>
+              <div class="bg-white rounded-[14px] p-4 border border-brand-teal/5"><p class="font-heading font-bold text-brand-teal text-sm mb-1">Session Plan (10 Sessions)</p><p class="text-xs text-brand-charcoal/60 leading-relaxed">Per-session: Rolfing focus, armor priorities, chakra context, emotional release potential, pacing, schema therapy notes, structural friction.</p></div>
+              <div class="bg-white rounded-[14px] p-4 border border-brand-teal/5"><p class="font-heading font-bold text-brand-teal text-sm mb-1">Gene Key Shadows</p><p class="text-xs text-brand-charcoal/60 leading-relaxed">64 Gene Keys mapped to body regions. Gates activated by planetary positions — each shadow names the fascial holding pattern the client's structure is organized around.</p></div>
+              <div class="bg-white rounded-[14px] p-4 border border-brand-teal/5"><p class="font-heading font-bold text-brand-teal text-sm mb-1">Cosmobiology Friction</p><p class="text-xs text-brand-charcoal/60 leading-relaxed">Ebertin midpoint method: when two planets bisect a third, tension patterns emerge. Saturn midpoints = fascial restrictions. Mars = inflammatory patterns.</p></div>
+              <div class="bg-white rounded-[14px] p-4 border border-brand-teal/5"><p class="font-heading font-bold text-brand-teal text-sm mb-1">Contraindications</p><p class="text-xs text-brand-charcoal/60 leading-relaxed">Safety flags from polyvagal risk scores, armor density, and HD open center vulnerability patterns. What to watch for, when to slow down.</p></div>
+              <div class="bg-white rounded-[14px] p-4 border border-brand-teal/5"><p class="font-heading font-bold text-brand-teal text-sm mb-1">Practitioner Notes</p><p class="text-xs text-brand-charcoal/60 leading-relaxed">Saturn placement (fascial network tendency), gravitational baseline, open center field dynamics. Strategic guidance for working with THIS specific client.</p></div>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-heading font-bold text-brand-teal text-lg mb-2">How the Mapping Works</h3>
+            <div class="space-y-3 text-sm text-brand-charcoal/70 leading-relaxed">
+              <p><strong>Planets → Body Regions.</strong> Each planet in a sign activates a specific body territory. Saturn in Scorpio = pelvic floor as structural anchor. Mars in Taurus = throat and neck as tension zones. The planetary ruler of each sign governs the anatomical territory.</p>
+              <p><strong>HD Centers → Holding Patterns.</strong> Open centers absorb and amplify external energy. Over time this creates fascial holding: open Solar Plexus = braced diaphragm, open Root = hypertonic psoas, open Spleen = adhesed visceral ligaments. The armor map translates center mechanics into tissue predictions.</p>
+              <p><strong>Gene Keys → Fascial Shadows.</strong> Each of the 64 Gene Keys has a Shadow (contracted expression) and a Gift (transformed). The Shadow name describes the fascial holding: Gate 33 (Forgetting) = anterior neck closure, Gate 21 (Control) = sternal armor, Gate 60 (Rigidity) = global superficial tension. Activated gates derived from planetary degree positions.</p>
+              <p><strong>Cosmobiology → Structural Friction.</strong> When three bodies form a midpoint structure (A/B = C), the third body is under tension. Saturn midpoints reveal where fascia is under chronic load. Multiple Saturn midpoints in a session territory = high-priority friction zone.</p>
+              <p><strong>Polyvagal → Session Architecture.</strong> The nervous system profile determines pacing, depth, and integration pauses. High dorsal risk requires extreme titration — 5-min work blocks with 2-min integration. High sympathetic requires grounding before upper-body work. Ventral capacity tells you whether the client can accurately report their internal state.</p>
+            </div>
+          </div>
+          <div class="bg-amber-50 border border-amber-200 rounded-[16px] p-5">
+            <h4 class="font-heading font-bold text-amber-700 mb-2">Important: This Is a Hypothesis, Not a Diagnosis</h4>
+            <p class="text-sm text-amber-600 leading-relaxed">The Stars Engine produces <strong>architectural predictions</strong> based on birth chart computation — not clinical assessments. Every prediction should be verified against in-session observation. The body on the table is always the authority; the chart is a working hypothesis. Use the Confirm/Deny buttons to track which predictions match your clinical experience.</p>
+          </div>
         </div>
       </div>
 
